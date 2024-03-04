@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'screens/projects_screen.dart';
 
 void main() {
   runApp(const MainApp());
@@ -12,13 +13,14 @@ class MainApp extends StatelessWidget {
     var screenWidth = MediaQuery.of(context).size.width;
     return MaterialApp(
       theme: ThemeData(
+        scaffoldBackgroundColor: Colors.grey.shade200,
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
             backgroundColor:
-                MaterialStateProperty.all(Color.fromARGB(255, 0, 115, 234)),
+                MaterialStateProperty.all(const Color.fromARGB(255, 0, 115, 234)),
             foregroundColor: MaterialStateProperty.all(Colors.white),
             padding: MaterialStateProperty.all(
-              EdgeInsets.symmetric(
+              const EdgeInsets.symmetric(
                 horizontal: 8.0,
                 vertical: 16.0,
               ),
@@ -42,9 +44,9 @@ class MainApp extends StatelessWidget {
                   width: 300,
                   height: 100,
                   decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 0, 115, 234),
+                    color: const Color.fromARGB(255, 0, 115, 234),
                     borderRadius: BorderRadius.circular(8.0),
-                    image: DecorationImage(
+                    image: const DecorationImage(
                       image: AssetImage('assets/images/logo.png'),
                       fit: BoxFit.cover,
                     ),
@@ -58,11 +60,11 @@ class MainApp extends StatelessWidget {
           ),
           title: TextField(
             decoration: InputDecoration(
-              border: InputBorder.none,
               fillColor: Colors.grey.shade200,
               filled: true,
+              border: InputBorder.none,
               hintText: 'Search',
-              suffixIcon: Icon(
+              suffixIcon: const Icon(
                 Icons.search,
               ),
             ),
@@ -77,9 +79,7 @@ class MainApp extends StatelessWidget {
             ),
           ],
         ),
-        body: Center(
-          child: Text('Hello World!'),
-        ),
+        body: const ProjectsScreen(),
         drawer: Drawer(
           width: screenWidth - 50,
           elevation: 2,
@@ -100,13 +100,13 @@ class MainApp extends StatelessWidget {
                             decoration: BoxDecoration(
                               // color: Color.fromARGB(255, 0, 115, 234),
                               borderRadius: BorderRadius.circular(8.0),
-                              image: DecorationImage(
+                              image: const DecorationImage(
                                 image: AssetImage('assets/images/logo.png'),
                                 fit: BoxFit.cover,
                               ),
                             ),
                           ),
-                          Text(
+                          const Text(
                             'Customer Support',
                             style: TextStyle(
                               fontWeight: FontWeight.w500,
@@ -116,43 +116,43 @@ class MainApp extends StatelessWidget {
                         ],
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: () {},
-                      child: Row(
+                      child: const Row(
                         children: [
                           Icon(Icons.add),
                           Text('New Project'),
                         ],
                       ),
                     ),
-                    SizedBox(height: 7),
+                    const SizedBox(height: 7),
                     ListTile(
-                      leading: Icon(
+                      leading: const Icon(
                         Icons.card_travel_rounded,
                       ),
-                      title: Text('Projects'),
+                      title: const Text('Projects'),
                       onTap: () {},
                     ),
                     ListTile(
-                      leading: Icon(
+                      leading: const Icon(
                         Icons.person_outlined,
                       ),
-                      title: Text('Project Managers'),
+                      title: const Text('Project Managers'),
                       onTap: () {},
                     ),
                     ListTile(
-                      leading: Icon(
+                      leading: const Icon(
                         Icons.person_add_alt_1_outlined,
                       ),
-                      title: Text('Employees'),
+                      title: const Text('Employees'),
                       onTap: () {},
                     ),
                     ListTile(
-                      leading: Icon(
+                      leading: const Icon(
                         Icons.settings_outlined,
                       ),
-                      title: Text('Settings'),
+                      title: const Text('Settings'),
                       onTap: () {},
                     ),
                   ],
