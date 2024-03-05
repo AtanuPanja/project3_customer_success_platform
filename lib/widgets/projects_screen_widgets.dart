@@ -15,7 +15,10 @@ class ProjectsCardDisplay extends StatelessWidget {
     var screenWidth = MediaQuery.of(context).size.width;
     return Container(
       width: screenWidth / 1.6,
-      margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0,),
+      margin: const EdgeInsets.symmetric(
+        horizontal: 8.0,
+        vertical: 16.0,
+      ),
       padding: const EdgeInsets.symmetric(
         vertical: 40.0,
       ),
@@ -45,7 +48,6 @@ class ProjectsCardDisplay extends StatelessWidget {
   }
 }
 
-
 class ProjectListing extends StatefulWidget {
   const ProjectListing({super.key});
 
@@ -54,7 +56,6 @@ class ProjectListing extends StatefulWidget {
 }
 
 class _ProjectListingState extends State<ProjectListing> {
-
   var listOfProjects = [
     {
       'name': 'Food on time',
@@ -133,22 +134,17 @@ class _ProjectListingState extends State<ProjectListing> {
       'project_manager': 'Rohit Shah',
       'members': '100'
     },
-
   ];
 
   String selectedTab = 'All Projects';
   List<String> tabs = ['All Projects', 'In progress', 'Completed', 'Hold'];
-  List<String> tableHeaders = ['Project Name', 'Started on', 'Status', 'Project Manager', 'Members'];
-  // List<bool> tabSelected = [true, false, false, false];
-
-  // void updateTabs(int currentIndex) {
-  //   setState(() {
-  //     // for (var i = 0; i < tabSelected.length; i++) {
-  //     //   tabSelected[i] = false;
-  //     // }
-  //     // tabSelected[currentIndex] = true;
-  //   });
-  // }
+  List<String> tableHeaders = [
+    'Project Name',
+    'Started on',
+    'Status',
+    'Project Manager',
+    'Members'
+  ];
 
   void setSelectedTab(String tabName) {
     setState(() {
@@ -164,26 +160,29 @@ class _ProjectListingState extends State<ProjectListing> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            children: tabs.map<Widget>((tabName) {
-              return InkWell(
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(
-                        color: selectedTab == tabName ? const Color.fromARGB(255, 0, 115, 234): Colors.transparent,
+            children: tabs.map<Widget>(
+              (tabName) {
+                return InkWell(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(
+                          color: selectedTab == tabName
+                              ? const Color.fromARGB(255, 0, 115, 234)
+                              : Colors.transparent,
+                        ),
                       ),
                     ),
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(tabName),
                   ),
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(tabName),
-                ),
-                onTap: () {
-                  setSelectedTab(tabName);
-                },
-              );
-            },).toList(),
+                  onTap: () {
+                    setSelectedTab(tabName);
+                  },
+                );
+              },
+            ).toList(),
           ),
-      
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -197,86 +196,120 @@ class _ProjectListingState extends State<ProjectListing> {
               InkWell(
                 child: Row(
                   children: [
-                    Icon(Icons.arrow_upward,),
-                    Icon(Icons.arrow_downward,),
+                    Icon(
+                      Icons.arrow_upward,
+                    ),
+                    Icon(
+                      Icons.arrow_downward,
+                    ),
                   ],
                 ),
                 onTap: () {},
               ),
             ],
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           Table(
+            border: TableBorder.symmetric(
+              outside: BorderSide(
+                color: Colors.grey.shade300,
+              ),
+            ),
+            defaultVerticalAlignment: TableCellVerticalAlignment.middle,
             children: [
               TableRow(
-                children: tableHeaders.map<Widget>((tableHeader) {
-                  return Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Text(
-                      tableHeader,
-                      style: TextStyle(
-                        color: Colors.grey.shade800,
-                        fontWeight: FontWeight.w600,
-                      ),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border(
+                    bottom: BorderSide(
+                      color: Colors.grey.shade300,
                     ),
-                  );
-                },).toList(),
+                  ),
+                ),
+                children: tableHeaders.map<Widget>(
+                  (tableHeader) {
+                    return Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Text(
+                        tableHeader,
+                        style: TextStyle(
+                          color: Colors.grey.shade600,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    );
+                  },
+                ).toList(),
               ),
-              
               ...switch (selectedTab) {
                 'All Projects' => listOfProjects,
-                'In progress' => listOfProjects.where((project) => project['status'] == 'In progress'),
-                'Completed' => listOfProjects.where((project) => project['status'] == 'Closed'),
-                'Hold' => listOfProjects.where((project) => project['status'] == 'Hold'),
+                'In progress' => listOfProjects
+                    .where((project) => project['status'] == 'In progress'),
+                'Completed' => listOfProjects
+                    .where((project) => project['status'] == 'Closed'),
+                'Hold' => listOfProjects
+                    .where((project) => project['status'] == 'Hold'),
                 _ => listOfProjects,
-              }.map<TableRow>((project) {
-                return TableRow(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: Text(
-                        '${project['name']}'
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: Text(
-                        '${project['start_date']}'
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 4.0, vertical: 2.0),
-                      decoration: BoxDecoration(
-                        color: switch (project['status']) {
-                          'On going' || 'In progress' => Color.fromARGB(255, 49, 135, 80),
-                          'Closed' => Color.fromARGB(255, 216, 58, 82),
-                          'Hold' => Colors.black,
-                          _ => Colors.transparent,
-                        },
-                        borderRadius: BorderRadius.circular(4.0),
-                      ),
-                      child: Text(
-                        '${project['status']}',
-                        style: TextStyle(
-                          color: Colors.white,
+              }
+                  .map<TableRow>(
+                (project) {
+                  return TableRow(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border(
+                        bottom: BorderSide(
+                          color: Colors.grey.shade300,
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: Text(
-                        '${project['project_manager']}'
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Text('${project['name']}'),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: Text(
-                        '${project['members']}'
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Text(
+                          '${project['start_date']}',
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
-                    ),
-                  ],
-                );
-              },).toList()
+                      Container(
+                        margin: const EdgeInsets.symmetric(vertical: 5.0),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 4.0, vertical: 2.0),
+                        decoration: BoxDecoration(
+                          color: switch (project['status']) {
+                            'On going' ||
+                            'In progress' =>
+                              Color.fromARGB(255, 49, 135, 80),
+                            'Closed' => Color.fromARGB(255, 216, 58, 82),
+                            'Hold' => Colors.black,
+                            _ => Colors.transparent,
+                          },
+                          borderRadius: BorderRadius.circular(4.0),
+                        ),
+                        child: Text(
+                          '${project['status']}',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Text('${project['project_manager']}'),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Text('${project['members']}'),
+                      ),
+                    ],
+                  );
+                },
+              ).toList()
             ],
           ),
         ],
