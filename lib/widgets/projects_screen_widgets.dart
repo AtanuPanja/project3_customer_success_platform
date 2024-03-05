@@ -223,7 +223,13 @@ class _ProjectListingState extends State<ProjectListing> {
                 },).toList(),
               ),
               
-              ...listOfProjects.map<TableRow>((project) {
+              ...switch (selectedTab) {
+                'All Projects' => listOfProjects,
+                'In progress' => listOfProjects.where((project) => project['status'] == 'In progress'),
+                'Completed' => listOfProjects.where((project) => project['status'] == 'Closed'),
+                'Hold' => listOfProjects.where((project) => project['status'] == 'Hold'),
+                _ => listOfProjects,
+              }.map<TableRow>((project) {
                 return TableRow(
                   children: [
                     Padding(
