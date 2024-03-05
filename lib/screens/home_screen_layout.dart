@@ -82,7 +82,8 @@ class _HomeScreenState extends State<HomeScreen> {
       drawer: Drawer(
         width: screenWidth - 50,
         elevation: 2,
-        child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
           child: ListView(
             children: [
               Padding(
@@ -127,6 +128,11 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 7),
               ListTile(
                 selected: currentIndex == 0,
+                selectedTileColor: Color.fromARGB(68, 0, 113, 234),
+                selectedColor: Colors.black,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(4.0),
+                ),
                 leading: const Icon(
                   Icons.card_travel_rounded,
                 ),
@@ -137,6 +143,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
               ),
               ListTile(
+                selectedTileColor: Color.fromARGB(68, 0, 113, 234),
+                selectedColor: Colors.black,
                 leading: const Icon(
                   Icons.person_outlined,
                 ),
@@ -144,6 +152,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 onTap: () {},
               ),
               ListTile(
+                selectedTileColor: Color.fromARGB(68, 0, 113, 234),
+                selectedColor: Colors.black,  
                 leading: const Icon(
                   Icons.person_add_alt_1_outlined,
                 ),
@@ -151,6 +161,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 onTap: () {},
               ),
               ListTile(
+                selectedTileColor: Color.fromARGB(68, 0, 113, 234),
+                selectedColor: Colors.black,
                 leading: const Icon(
                   Icons.settings_outlined,
                 ),

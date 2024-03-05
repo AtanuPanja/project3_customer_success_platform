@@ -14,13 +14,13 @@ class ProjectsCardDisplay extends StatelessWidget {
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
     return Container(
-      width: screenWidth / 1.6,
+      width: screenWidth / 5,
       margin: const EdgeInsets.symmetric(
         horizontal: 8.0,
         vertical: 16.0,
       ),
       padding: const EdgeInsets.symmetric(
-        vertical: 40.0,
+        vertical: 24.0,
       ),
       decoration: BoxDecoration(
         border: Border.all(
@@ -35,12 +35,16 @@ class ProjectsCardDisplay extends StatelessWidget {
           Text(
             count,
             style: TextStyle(
-              fontSize: 32,
+              fontSize: 24,
               fontWeight: FontWeight.bold,
             ),
           ),
           Text(
             type,
+            style: TextStyle(
+              fontSize: 12,
+              
+            ),
           ),
         ],
       ),
@@ -159,29 +163,39 @@ class _ProjectListingState extends State<ProjectListing> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: tabs.map<Widget>(
-              (tabName) {
-                return InkWell(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(
-                          color: selectedTab == tabName
-                              ? const Color.fromARGB(255, 0, 115, 234)
-                              : Colors.transparent,
+          Container(
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(
+                  color: Colors.grey.shade500,
+                ),
+              ),
+            ),
+            child: Row(
+              children: tabs.map<Widget>(
+                (tabName) {
+                  return InkWell(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                            color: selectedTab == tabName
+                                ? const Color.fromARGB(255, 0, 115, 234)
+                                : Colors.transparent,
+                            width: 2,
+                          ),
                         ),
                       ),
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(tabName),
                     ),
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(tabName),
-                  ),
-                  onTap: () {
-                    setSelectedTab(tabName);
-                  },
-                );
-              },
-            ).toList(),
+                    onTap: () {
+                      setSelectedTab(tabName);
+                    },
+                  );
+                },
+              ).toList(),
+            ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -217,7 +231,6 @@ class _ProjectListingState extends State<ProjectListing> {
                 color: Colors.grey.shade300,
               ),
             ),
-            defaultVerticalAlignment: TableCellVerticalAlignment.middle,
             children: [
               TableRow(
                 decoration: BoxDecoration(

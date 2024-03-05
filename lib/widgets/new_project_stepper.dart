@@ -24,44 +24,188 @@ class _NewProjectStepperState extends State<NewProjectStepper> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body: Theme(
+        data: Theme.of(context).copyWith(
+          colorScheme: Theme.of(context).colorScheme.copyWith(
+            primary: const Color.fromARGB(255, 0, 115, 234),
+          ),
+        ),
         child: Stepper(
-          currentStep: currentStep,
-          onStepContinue: () {
-            setState(() {
-              // since there are three steps, steps.length replaced with 3
-              if (currentStep < 3 - 1) {
-                currentStep += 1;
-              } else {}
-            });
+          controlsBuilder: (context, details) {
+            return Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+              child: ElevatedButton(
+                style: ButtonStyle(
+                  padding: MaterialStateProperty.all(
+                    EdgeInsets.symmetric(vertical: 8.0, horizontal: 32.0),
+                  ),
+                ),
+                child: Text(currentStep == 1 ? 'Send invite' : 'Continue'),
+                onPressed: () {
+                  setState(() {
+                    // since there are three steps, steps.length replaced with 3
+                    if (currentStep < 3 - 1) {
+                      currentStep += 1;
+                    } else {}
+                  });
+                },
+              ),
+            );
           },
+          stepIconBuilder: (stepIndex, stepState) {
+            if (stepIndex <= currentStep) {
+              return Icon(
+                Icons.check,
+                size: 16,
+                color: Colors.white,
+              );
+            } else {
+              return Text('${stepIndex + 1}', style: TextStyle(color: Colors.white,),);
+            }
+          },
+          currentStep: currentStep,
           steps: [
             Step(
+              isActive: currentStep >= 0,
               title: Text('Project Details'),
               content: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Project name *'),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Project name *'),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      TextFormField(
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.grey.shade500,
+                              width: 0.5,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(),
+                          ),
+                          hintText: 'Placeholder text here',
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 5),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Project brief'),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      TextFormField(
+                        maxLines: 5,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.grey.shade500,
+                              width: 0.5,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(),
+                          ),
+                          hintText: 'Write project brief here',
+                        ),
+                      ),
+                    ],
+                  ),
                   SizedBox(
                     height: 5,
                   ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.grey.shade700,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Purpose'),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      TextFormField(
+                        maxLines: 3,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.grey.shade500,
+                              width: 0.5,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(),
+                          ),
+                          hintText: 'Write project purpose here',
                         ),
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Goals'),
+                      SizedBox(
+                        height: 5,
                       ),
-                      hintText: 'Placeholder text here',
-                    ),
+                      TextFormField(
+                        maxLines: 3,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.grey.shade500,
+                              width: 0.5,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(),
+                          ),
+                          hintText: 'Write project goals here',
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Objectives'),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      TextFormField(
+                        maxLines: 3,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.grey.shade500,
+                              width: 0.5,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(),
+                          ),
+                          hintText: 'Write project objectives here',
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
             ),
             Step(
+              isActive: currentStep >= 1,
               title: Text('Invite client'),
               content: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -129,9 +273,12 @@ class _NewProjectStepperState extends State<NewProjectStepper> {
               ),
             ),
             Step(
+              isActive: currentStep >= 2,
               title: Text('Select Project Manager'),
               content: DropdownButton(
-                icon: Icon(Icons.keyboard_arrow_down_outlined,),
+                icon: Icon(
+                  Icons.keyboard_arrow_down_outlined,
+                ),
                 isExpanded: true,
                 value: selectedOptionFromDropdown,
                 onChanged: (value) {
@@ -139,7 +286,8 @@ class _NewProjectStepperState extends State<NewProjectStepper> {
                     selectedOptionFromDropdown = value ?? 'Project Manager One';
                   });
                 },
-                items: listOfProjectManagers.map<DropdownMenuItem<String>> ((String value) {
+                items: listOfProjectManagers
+                    .map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem(
                     value: value,
                     child: Text(value),
