@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project3_customer_success_platform/screens/project_detail_screen.dart';
 
 class ProjectsCardDisplay extends StatelessWidget {
   const ProjectsCardDisplay({
@@ -43,7 +44,6 @@ class ProjectsCardDisplay extends StatelessWidget {
             type,
             style: TextStyle(
               fontSize: 12,
-              
             ),
           ),
         ],
@@ -278,9 +278,19 @@ class _ProjectListingState extends State<ProjectListing> {
                       ),
                     ),
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: Text('${project['name']}'),
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ProjectDetailsScreen(),
+                            ),
+                          );
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Text('${project['name']}'),
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(4.0),
