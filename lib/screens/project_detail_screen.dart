@@ -37,6 +37,22 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Row(
+                children: [
+                  Icon(Icons.card_travel_rounded, size: 12,),
+                  SizedBox(width: 2,),
+                  Text('Projects', style: TextStyle(fontSize: 12,),),
+                  SizedBox(width: 2,),
+                  Icon(Icons.arrow_forward_ios, size: 12,),
+                  SizedBox(width: 2,),
+                  Icon(Icons.business_center_outlined, size: 12,),
+                  SizedBox(width: 2,),
+                  Text(widget.projectName, style: TextStyle(fontSize: 12,),),
+                  SizedBox(width: 2,),
+                  Icon(Icons.arrow_forward_ios, size: 12,),
+                ],
+              ),
+              SizedBox(height: 10,),
               Text(
                 widget.projectName,
                 style: TextStyle(

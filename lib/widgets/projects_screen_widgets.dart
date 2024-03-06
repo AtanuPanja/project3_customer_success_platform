@@ -291,7 +291,12 @@ class _ProjectListingState extends State<ProjectListing> {
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(4.0),
-                          child: Text('${project['name']}'),
+                          child: Text(
+                            '${project['name']}',
+                            style: TextStyle(
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
                         ),
                       ),
                       Padding(
