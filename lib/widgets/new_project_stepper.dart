@@ -38,7 +38,7 @@ class _NewProjectStepperState extends State<NewProjectStepper> {
               child: ElevatedButton(
                 style: ButtonStyle(
                   padding: MaterialStateProperty.all(
-                    EdgeInsets.symmetric(vertical: 8.0, horizontal: 32.0),
+                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 32.0),
                   ),
                 ),
                 child: Text(currentStep == 1 ? 'Send invite' : 'Continue'),
@@ -55,28 +55,28 @@ class _NewProjectStepperState extends State<NewProjectStepper> {
           },
           stepIconBuilder: (stepIndex, stepState) {
             if (stepIndex <= currentStep) {
-              return Icon(
+              return const Icon(
                 Icons.check,
                 size: 16,
                 color: Colors.white,
               );
             } else {
-              return Text('${stepIndex + 1}', style: TextStyle(color: Colors.white,),);
+              return Text('${stepIndex + 1}', style: const TextStyle(color: Colors.white,),);
             }
           },
           currentStep: currentStep,
           steps: [
             Step(
               isActive: currentStep >= 0,
-              title: Text('Project Details'),
+              title: const Text('Project Details'),
               content: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Project name *'),
-                      SizedBox(
+                      const Text('Project name *'),
+                      const SizedBox(
                         height: 5,
                       ),
                       TextFormField(
@@ -87,7 +87,7 @@ class _NewProjectStepperState extends State<NewProjectStepper> {
                               width: 0.5,
                             ),
                           ),
-                          focusedBorder: OutlineInputBorder(
+                          focusedBorder: const OutlineInputBorder(
                             borderSide: BorderSide(),
                           ),
                           hintText: 'Placeholder text here',
@@ -95,12 +95,12 @@ class _NewProjectStepperState extends State<NewProjectStepper> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 5),
+                  const SizedBox(height: 5),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Project brief'),
-                      SizedBox(
+                      const Text('Project brief'),
+                      const SizedBox(
                         height: 5,
                       ),
                       TextFormField(
@@ -112,7 +112,7 @@ class _NewProjectStepperState extends State<NewProjectStepper> {
                               width: 0.5,
                             ),
                           ),
-                          focusedBorder: OutlineInputBorder(
+                          focusedBorder: const OutlineInputBorder(
                             borderSide: BorderSide(),
                           ),
                           hintText: 'Write project brief here',
@@ -120,14 +120,14 @@ class _NewProjectStepperState extends State<NewProjectStepper> {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Purpose'),
-                      SizedBox(
+                      const Text('Purpose'),
+                      const SizedBox(
                         height: 5,
                       ),
                       TextFormField(
@@ -139,7 +139,7 @@ class _NewProjectStepperState extends State<NewProjectStepper> {
                               width: 0.5,
                             ),
                           ),
-                          focusedBorder: OutlineInputBorder(
+                          focusedBorder: const OutlineInputBorder(
                             borderSide: BorderSide(),
                           ),
                           hintText: 'Write project purpose here',
@@ -147,14 +147,14 @@ class _NewProjectStepperState extends State<NewProjectStepper> {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Goals'),
-                      SizedBox(
+                      const Text('Goals'),
+                      const SizedBox(
                         height: 5,
                       ),
                       TextFormField(
@@ -166,7 +166,7 @@ class _NewProjectStepperState extends State<NewProjectStepper> {
                               width: 0.5,
                             ),
                           ),
-                          focusedBorder: OutlineInputBorder(
+                          focusedBorder: const OutlineInputBorder(
                             borderSide: BorderSide(),
                           ),
                           hintText: 'Write project goals here',
@@ -174,14 +174,14 @@ class _NewProjectStepperState extends State<NewProjectStepper> {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Objectives'),
-                      SizedBox(
+                      const Text('Objectives'),
+                      const SizedBox(
                         height: 5,
                       ),
                       TextFormField(
@@ -193,7 +193,7 @@ class _NewProjectStepperState extends State<NewProjectStepper> {
                               width: 0.5,
                             ),
                           ),
-                          focusedBorder: OutlineInputBorder(
+                          focusedBorder: const OutlineInputBorder(
                             borderSide: BorderSide(),
                           ),
                           hintText: 'Write project objectives here',
@@ -206,12 +206,12 @@ class _NewProjectStepperState extends State<NewProjectStepper> {
             ),
             Step(
               isActive: currentStep >= 1,
-              title: Text('Invite client'),
+              title: const Text('Invite client'),
               content: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Client name'),
-                  SizedBox(
+                  const Text('Client name'),
+                  const SizedBox(
                     height: 5,
                   ),
                   TextFormField(
@@ -221,17 +221,17 @@ class _NewProjectStepperState extends State<NewProjectStepper> {
                           color: Colors.grey.shade700,
                         ),
                       ),
-                      focusedBorder: OutlineInputBorder(
+                      focusedBorder: const OutlineInputBorder(
                         borderSide: BorderSide(),
                       ),
                       hintText: 'Name here',
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
-                  Text('Client email'),
-                  SizedBox(
+                  const Text('Client email'),
+                  const SizedBox(
                     height: 5,
                   ),
                   TextFormField(
@@ -241,13 +241,13 @@ class _NewProjectStepperState extends State<NewProjectStepper> {
                           color: Colors.grey.shade700,
                         ),
                       ),
-                      focusedBorder: OutlineInputBorder(
+                      focusedBorder: const OutlineInputBorder(
                         borderSide: BorderSide(),
                       ),
                       hintText: 'example@work.com',
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   OutlinedButton(
@@ -259,9 +259,9 @@ class _NewProjectStepperState extends State<NewProjectStepper> {
                       ),
                       foregroundColor: MaterialStateProperty.all(Colors.black),
                       overlayColor: MaterialStateProperty.all(
-                          Color.fromARGB(45, 0, 113, 234)),
+                          const Color.fromARGB(45, 0, 113, 234)),
                     ),
-                    child: Row(
+                    child: const Row(
                       children: [
                         Icon(Icons.add),
                         Text('Add'),
@@ -274,9 +274,9 @@ class _NewProjectStepperState extends State<NewProjectStepper> {
             ),
             Step(
               isActive: currentStep >= 2,
-              title: Text('Select Project Manager'),
+              title: const Text('Select Project Manager'),
               content: DropdownButton(
-                icon: Icon(
+                icon: const Icon(
                   Icons.keyboard_arrow_down_outlined,
                 ),
                 isExpanded: true,

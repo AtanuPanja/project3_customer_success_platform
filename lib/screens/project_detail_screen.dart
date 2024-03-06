@@ -48,7 +48,7 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
                     onTap: () {
                       Navigator.of(context).pop();
                     },
-                    child: Row(
+                    child: const Row(
                       children: [
                         Icon(
                           Icons.card_travel_rounded,
@@ -73,28 +73,28 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 2,
                   ),
                   Row(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.business_center_outlined,
                         size: 12,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 2,
                       ),
                       Text(
                         widget.projectName,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 12,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 2,
                       ),
-                      Icon(
+                      const Icon(
                         Icons.arrow_forward_ios,
                         size: 12,
                       ),
@@ -103,7 +103,7 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
                 ],
               ),
               // breadcrumbs widget ends here
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               // showing project name with the number of project members
@@ -117,7 +117,7 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
                 children: [
                   Text(
                     widget.projectName,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.w600,
                     ),
@@ -127,9 +127,9 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
                     children: [
                       if (currentOrientation == Orientation.landscape &&
                           widget.members != '0')
-                        Text('Members'),
+                        const Text('Members'),
                       switch (widget.members) {
-                        '0' => Text('No members'),
+                        '0' => const Text('No members'),
                         '1' => Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: InkWell(
@@ -140,7 +140,7 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
                           ),
                         '2' => Container(
                             width: screenWidth / 3,
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                               horizontal: 8.0,
                             ),
                             child: Stack(
@@ -165,7 +165,7 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
                           ),
                         '3' => Container(
                             width: screenWidth / 3,
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                               horizontal: 8.0,
                             ),
                             child: Stack(
@@ -198,7 +198,7 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
                           ),
                         _ => Container(
                             width: screenWidth / 3,
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                               horizontal: 8.0,
                             ),
                             child: Stack(
@@ -206,7 +206,7 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
                                 Positioned(
                                   left: 40,
                                   child: Container(
-                                    padding: EdgeInsets.only(
+                                    padding: const EdgeInsets.only(
                                       left: 35.0,
                                       right: 5.0,
                                       top: 6.0,
@@ -217,8 +217,8 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
                                       borderRadius: BorderRadius.circular(16.0),
                                     ),
                                     child: Text(
-                                      '+' + '${int.parse(widget.members) - 3}',
-                                      style: TextStyle(
+                                      '+ ${int.parse(widget.members) - 3}',
+                                      style: const TextStyle(
                                           fontWeight: FontWeight.w700),
                                     ),
                                   ),
@@ -273,7 +273,7 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
                   ),
                 ),
                 onPressed: () {},
-                child: Row(
+                child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -314,16 +314,16 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
+                padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
                 child: Column(
                   children: [
                     switch (currentTab) {
-                      'Project Overview' => ProjectOverview(),
-                      'Scope & stack' => ScopeAndStack(),
-                      'Escalation matrix' => EscalationMatrix(),
+                      'Project Overview' => const ProjectOverview(),
+                      'Scope & stack' => const ScopeAndStack(),
+                      'Escalation matrix' => const EscalationMatrix(),
                       _ => Text(currentTab),
                     },
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     ElevatedButton(
@@ -337,12 +337,12 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
                             return;
                         }
                       },
-                      child: Text('Continue'),
                       style: ButtonStyle(
                         minimumSize: MaterialStateProperty.all(
                           Size(screenWidth, 50),
                         ),
                       ),
+                      child: const Text('Continue'),
                     ),
                   ],
                 ),
@@ -365,8 +365,8 @@ class ProjectOverview extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Project brief'),
-        SizedBox(
+        const Text('Project brief'),
+        const SizedBox(
           height: 5,
         ),
         TextFormField(
@@ -378,17 +378,17 @@ class ProjectOverview extends StatelessWidget {
                 width: 0.5,
               ),
             ),
-            focusedBorder: OutlineInputBorder(
+            focusedBorder: const OutlineInputBorder(
               borderSide: BorderSide(),
             ),
             hintText: 'Write project brief here',
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 5,
         ),
-        Text('Purpose'),
-        SizedBox(
+        const Text('Purpose'),
+        const SizedBox(
           height: 5,
         ),
         TextFormField(
@@ -400,17 +400,17 @@ class ProjectOverview extends StatelessWidget {
                 width: 0.5,
               ),
             ),
-            focusedBorder: OutlineInputBorder(
+            focusedBorder: const OutlineInputBorder(
               borderSide: BorderSide(),
             ),
             hintText: 'Write project purpose here',
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 5,
         ),
-        Text('Goals'),
-        SizedBox(
+        const Text('Goals'),
+        const SizedBox(
           height: 5,
         ),
         TextFormField(
@@ -422,17 +422,17 @@ class ProjectOverview extends StatelessWidget {
                 width: 0.5,
               ),
             ),
-            focusedBorder: OutlineInputBorder(
+            focusedBorder: const OutlineInputBorder(
               borderSide: BorderSide(),
             ),
             hintText: 'Write project goals here',
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 5,
         ),
-        Text('Objectives'),
-        SizedBox(
+        const Text('Objectives'),
+        const SizedBox(
           height: 5,
         ),
         TextFormField(
@@ -444,24 +444,24 @@ class ProjectOverview extends StatelessWidget {
                 width: 0.5,
               ),
             ),
-            focusedBorder: OutlineInputBorder(
+            focusedBorder: const OutlineInputBorder(
               borderSide: BorderSide(),
             ),
             hintText: 'Write project objectives here',
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 5,
         ),
-        Text('Budget'),
-        SizedBox(
+        const Text('Budget'),
+        const SizedBox(
           height: 5,
         ),
         Row(
           children: [
             TextFormField(
               decoration: InputDecoration(
-                constraints: BoxConstraints(
+                constraints: const BoxConstraints(
                   maxWidth: 100,
                 ),
                 border: OutlineInputBorder(
@@ -470,17 +470,17 @@ class ProjectOverview extends StatelessWidget {
                     width: 0.5,
                   ),
                 ),
-                focusedBorder: OutlineInputBorder(
+                focusedBorder: const OutlineInputBorder(
                   borderSide: BorderSide(),
                 ),
                 hintText: '9999',
               ),
               keyboardType: TextInputType.number,
             ),
-            SizedBox(
+            const SizedBox(
               width: 5,
             ),
-            Text('US Dollar'),
+            const Text('US Dollar'),
           ],
         ),
       ],
@@ -511,9 +511,9 @@ class _ScopeAndStackState extends State<ScopeAndStack> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Select Project Technologies'),
+        const Text('Select Project Technologies'),
         DropdownButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.keyboard_arrow_down_outlined,
           ),
           isExpanded: true,
@@ -531,10 +531,10 @@ class _ScopeAndStackState extends State<ScopeAndStack> {
             );
           }).toList(),
         ),
-        SizedBox(
+        const SizedBox(
           height: 5,
         ),
-        Text('Project Scope'),
+        const Text('Project Scope'),
         TextFormField(
           maxLines: 3,
           decoration: InputDecoration(
@@ -544,7 +544,7 @@ class _ScopeAndStackState extends State<ScopeAndStack> {
                 width: 0.5,
               ),
             ),
-            focusedBorder: OutlineInputBorder(
+            focusedBorder: const OutlineInputBorder(
               borderSide: BorderSide(),
             ),
             hintText: 'Write here',
@@ -574,7 +574,7 @@ class _EscalationMatrixState extends State<EscalationMatrix> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           'Operational Escalation Matrix',
           style: TextStyle(
             fontSize: 18,
@@ -582,10 +582,10 @@ class _EscalationMatrixState extends State<EscalationMatrix> {
           ),
         ),
         EscalationMatrixTable(tableHeaders: tableHeaders),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
-        Text(
+        const Text(
           'Financial Escalation Matrix',
           style: TextStyle(
             fontSize: 18,
@@ -593,10 +593,10 @@ class _EscalationMatrixState extends State<EscalationMatrix> {
           ),
         ),
         EscalationMatrixTable(tableHeaders: tableHeaders),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
-        Text(
+        const Text(
           'Technical Escalation Matrix',
           style: TextStyle(
             fontSize: 18,
@@ -685,9 +685,9 @@ class _EscalationMatrixTableState extends State<EscalationMatrixTable> {
             ),
           ),
           children: [
-            Padding(
+            const Padding(
               padding:
-                  const EdgeInsets.symmetric(horizontal: 4.0, vertical: 6.0),
+                  EdgeInsets.symmetric(horizontal: 4.0, vertical: 6.0),
               child: Text(
                 'Level 1',
               ),
@@ -698,12 +698,12 @@ class _EscalationMatrixTableState extends State<EscalationMatrixTable> {
                 horizontal: 2.0,
               ),
               child: DropdownButton(
-                icon: Icon(
+                icon: const Icon(
                   Icons.keyboard_arrow_down,
                   size: 15,
                 ),
                 isExpanded: true,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 12.5,
                   color: Colors.black,
                 ),
@@ -742,9 +742,9 @@ class _EscalationMatrixTableState extends State<EscalationMatrixTable> {
             ),
           ),
           children: [
-            Padding(
+            const Padding(
               padding:
-                  const EdgeInsets.symmetric(horizontal: 4.0, vertical: 6.0),
+                  EdgeInsets.symmetric(horizontal: 4.0, vertical: 6.0),
               child: Text(
                 'Level 2',
               ),
@@ -755,12 +755,12 @@ class _EscalationMatrixTableState extends State<EscalationMatrixTable> {
                 horizontal: 2.0,
               ),
               child: DropdownButton(
-                icon: Icon(
+                icon: const Icon(
                   Icons.keyboard_arrow_down,
                   size: 15,
                 ),
                 isExpanded: true,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 12.5,
                   color: Colors.black,
                 ),
@@ -799,9 +799,9 @@ class _EscalationMatrixTableState extends State<EscalationMatrixTable> {
             ),
           ),
           children: [
-            Padding(
+            const Padding(
               padding:
-                  const EdgeInsets.symmetric(horizontal: 4.0, vertical: 6.0),
+                  EdgeInsets.symmetric(horizontal: 4.0, vertical: 6.0),
               child: Text(
                 'Level 3',
               ),
@@ -812,12 +812,12 @@ class _EscalationMatrixTableState extends State<EscalationMatrixTable> {
                 horizontal: 2.0,
               ),
               child: DropdownButton(
-                icon: Icon(
+                icon: const Icon(
                   Icons.keyboard_arrow_down,
                   size: 15,
                 ),
                 isExpanded: true,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 12.5,
                   color: Colors.black,
                 ),

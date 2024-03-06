@@ -143,7 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
               ),
               ListTile(
-                selectedTileColor: Color.fromARGB(68, 0, 113, 234),
+                selectedTileColor: const Color.fromARGB(68, 0, 113, 234),
                 selectedColor: Colors.black,
                 leading: const Icon(
                   Icons.person_outlined,
@@ -152,7 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 onTap: () {},
               ),
               ListTile(
-                selectedTileColor: Color.fromARGB(68, 0, 113, 234),
+                selectedTileColor: const Color.fromARGB(68, 0, 113, 234),
                 selectedColor: Colors.black,  
                 leading: const Icon(
                   Icons.person_add_alt_1_outlined,
@@ -161,7 +161,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 onTap: () {},
               ),
               ListTile(
-                selectedTileColor: Color.fromARGB(68, 0, 113, 234),
+                selectedTileColor: const Color.fromARGB(68, 0, 113, 234),
                 selectedColor: Colors.black,
                 leading: const Icon(
                   Icons.settings_outlined,

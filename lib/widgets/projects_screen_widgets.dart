@@ -36,14 +36,14 @@ class ProjectsCardDisplay extends StatelessWidget {
         children: [
           Text(
             count,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
             ),
           ),
           Text(
             type,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 12,
             ),
           ),
@@ -125,13 +125,13 @@ class _ProjectListingState extends State<ProjectListing> {
             children: [
               Text(
                 selectedTab,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 25,
                   fontWeight: FontWeight.w700,
                 ),
               ),
               InkWell(
-                child: Row(
+                child: const Row(
                   children: [
                     Icon(
                       Icons.arrow_upward,
@@ -145,7 +145,7 @@ class _ProjectListingState extends State<ProjectListing> {
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Table(
@@ -217,7 +217,7 @@ class _ProjectListingState extends State<ProjectListing> {
                           padding: const EdgeInsets.all(4.0),
                           child: Text(
                             '${project['name']}',
-                            style: TextStyle(
+                            style: const TextStyle(
                               decoration: TextDecoration.underline,
                             ),
                           ),
@@ -232,14 +232,14 @@ class _ProjectListingState extends State<ProjectListing> {
                       ),
                       Container(
                         margin: const EdgeInsets.symmetric(vertical: 5.0),
-                        padding: EdgeInsets.symmetric(
+                        padding: const EdgeInsets.symmetric(
                             horizontal: 4.0, vertical: 2.0),
                         decoration: BoxDecoration(
                           color: switch (project['status']) {
                             'On going' ||
                             'In progress' =>
-                              Color.fromARGB(255, 49, 135, 80),
-                            'Closed' => Color.fromARGB(255, 216, 58, 82),
+                              const Color.fromARGB(255, 49, 135, 80),
+                            'Closed' => const Color.fromARGB(255, 216, 58, 82),
                             'Hold' => Colors.black,
                             _ => Colors.transparent,
                           },
@@ -247,7 +247,7 @@ class _ProjectListingState extends State<ProjectListing> {
                         ),
                         child: Text(
                           '${project['status']}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.white,
                           ),
                         ),
@@ -263,7 +263,7 @@ class _ProjectListingState extends State<ProjectListing> {
                     ],
                   );
                 },
-              ).toList()
+              )
             ],
           ),
         ],
