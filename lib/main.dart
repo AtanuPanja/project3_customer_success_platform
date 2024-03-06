@@ -31,6 +31,23 @@ class MainApp extends StatelessWidget {
             ),
           ),
         ),
+        outlinedButtonTheme: OutlinedButtonThemeData(
+          style: ButtonStyle(
+            padding: MaterialStateProperty.all(
+              const EdgeInsets.symmetric(
+                horizontal: 8.0,
+                vertical: 16.0,
+              ),
+            ),
+            foregroundColor: MaterialStateProperty.all(Colors.grey.shade700),
+            maximumSize: MaterialStateProperty.all(Size(200, 25)),
+            shape: MaterialStateProperty.all(
+              BeveledRectangleBorder(
+                borderRadius: BorderRadius.circular(2.8),
+              ),
+            ),
+          ),
+        )
       ),
       debugShowCheckedModeBanner: false,
       home: const SafeArea(child: HomeScreen()),
