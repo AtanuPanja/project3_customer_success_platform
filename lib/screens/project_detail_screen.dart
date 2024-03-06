@@ -4,9 +4,11 @@ class ProjectDetailsScreen extends StatefulWidget {
   const ProjectDetailsScreen({
     super.key,
     required this.projectName,
+    required this.members,
   });
 
   final String projectName;
+  final String members;
 
   @override
   State<ProjectDetailsScreen> createState() => _ProjectDetailsScreenState();
@@ -29,6 +31,7 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
+    var currentOrientation = MediaQuery.of(context).orientation;
     return Scaffold(
       appBar: AppBar(),
       body: SingleChildScrollView(
@@ -37,28 +40,232 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Breadcrumbs: This Row widget creates the breadcrumbs display
+              // Clicking on the Projects, we can again navigate back to the projects page
               Row(
                 children: [
-                  Icon(Icons.card_travel_rounded, size: 12,),
-                  SizedBox(width: 2,),
-                  Text('Projects', style: TextStyle(fontSize: 12,),),
-                  SizedBox(width: 2,),
-                  Icon(Icons.arrow_forward_ios, size: 12,),
-                  SizedBox(width: 2,),
-                  Icon(Icons.business_center_outlined, size: 12,),
-                  SizedBox(width: 2,),
-                  Text(widget.projectName, style: TextStyle(fontSize: 12,),),
-                  SizedBox(width: 2,),
-                  Icon(Icons.arrow_forward_ios, size: 12,),
+                  InkWell(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.card_travel_rounded,
+                          size: 12,
+                        ),
+                        SizedBox(
+                          width: 2,
+                        ),
+                        Text(
+                          'Projects',
+                          style: TextStyle(
+                            fontSize: 12,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 2,
+                        ),
+                        Icon(
+                          Icons.arrow_forward_ios,
+                          size: 12,
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    width: 2,
+                  ),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.business_center_outlined,
+                        size: 12,
+                      ),
+                      SizedBox(
+                        width: 2,
+                      ),
+                      Text(
+                        widget.projectName,
+                        style: TextStyle(
+                          fontSize: 12,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 2,
+                      ),
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        size: 12,
+                      ),
+                    ],
+                  ),
                 ],
               ),
-              SizedBox(height: 10,),
-              Text(
-                widget.projectName,
-                style: TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.w600,
+              // breadcrumbs widget ends here
+              SizedBox(
+                height: 10,
+              ),
+              // showing project name with the number of project members
+              // 0 members: No members
+              // 1 member: 1 profile is shown
+              // 2 members: 2 profiles are shown
+              // 3 members: 3 profiles are shown
+              // > 3 members: 3 profiles, alongwith a plus and total members - 3
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    widget.projectName,
+                    style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      if (currentOrientation == Orientation.landscape && widget.members != '0')
+                        Text('Members'),
+                      switch (widget.members) {
+                        '0' => Text('No members'),
+                        '1' => Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: InkWell(
+                              child: Image.asset(
+                                  'assets/images/default_profile_32px.png'),
+                              onTap: () {},
+                            ),
+                          ),
+                        '2' => Container(
+                            width: screenWidth / 3,
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 8.0,
+                            ),
+                            child: Stack(
+                              children: [
+                                Positioned(
+                                  left: 20.0,
+                                  child: InkWell(
+                                    child: Image.asset(
+                                        'assets/images/default_profile_32px.png'),
+                                    onTap: () {},
+                                  ),
+                                ),
+                                Positioned(
+                                  child: InkWell(
+                                    child: Image.asset(
+                                        'assets/images/default_profile_32px.png'),
+                                    onTap: () {},
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        '3' => Container(
+                            width: screenWidth / 3,
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 8.0,
+                            ),
+                            child: Stack(
+                              children: [
+                                Positioned(
+                                  left: 50,
+                                  child: InkWell(
+                                    child: Image.asset(
+                                        'assets/images/default_profile_32px.png'),
+                                    onTap: () {},
+                                  ),
+                                ),
+                                Positioned(
+                                  left: 25.0,
+                                  child: InkWell(
+                                    child: Image.asset(
+                                        'assets/images/default_profile_32px.png'),
+                                    onTap: () {},
+                                  ),
+                                ),
+                                Positioned(
+                                  child: InkWell(
+                                    child: Image.asset(
+                                        'assets/images/default_profile_32px.png'),
+                                    onTap: () {},
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        _ => Container(
+                            width: screenWidth / 3,
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 8.0,
+                            ),
+                            child: Stack(
+                              children: [
+                                Positioned(
+                                  left: 40,
+                                  child: Container(
+                                    padding: EdgeInsets.only(
+                                      left: 35.0,
+                                      right: 5.0,
+                                      top: 6.0,
+                                      bottom: 6.0,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: Colors.blueGrey.shade200,
+                                      borderRadius: BorderRadius.circular(16.0),
+                                    ),
+                                    child: Text(
+                                      '+' + '${int.parse(widget.members) - 3}',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                  ),
+                                ),
+                                Positioned(
+                                  left: 40,
+                                  child: InkWell(
+                                    child: Image.asset(
+                                        'assets/images/default_profile_32px.png'),
+                                    onTap: () {},
+                                  ),
+                                ),
+                                Positioned(
+                                  left: 20.0,
+                                  child: InkWell(
+                                    child: Image.asset(
+                                        'assets/images/default_profile_32px.png'),
+                                    onTap: () {},
+                                  ),
+                                ),
+                                Positioned(
+                                  child: InkWell(
+                                    child: Image.asset(
+                                        'assets/images/default_profile_32px.png'),
+                                    onTap: () {},
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                      },
+                    ],
+                  ),
+                ],
+              ),
+              // the project name with the profiles widget ends here
+              OutlinedButton(
+                style: ButtonStyle(
+                  maximumSize: MaterialStateProperty.all(Size(
+                    screenWidth / 2,
+                    50,
+                  )),
                 ),
+                onPressed: () {},
+                child: Row(children: [
+                  Icon(Icons.person),
+                  Text('Invite Members'),
+                ]),
               ),
               Container(
                 decoration: BoxDecoration(
@@ -352,15 +559,36 @@ class _EscalationMatrixState extends State<EscalationMatrix> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Operational Escalation Matrix', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500,),),
+        Text(
+          'Operational Escalation Matrix',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
         EscalationMatrixTable(tableHeaders: tableHeaders),
-        SizedBox(height: 10,),
-        Text('Financial Escalation Matrix', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500,),),
+        SizedBox(
+          height: 10,
+        ),
+        Text(
+          'Financial Escalation Matrix',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
         EscalationMatrixTable(tableHeaders: tableHeaders),
-        SizedBox(height: 10,),
-        Text('Technical Escalation Matrix', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500,),),
+        SizedBox(
+          height: 10,
+        ),
+        Text(
+          'Technical Escalation Matrix',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
         EscalationMatrixTable(tableHeaders: tableHeaders),
-        
       ],
     );
   }
@@ -374,12 +602,10 @@ class EscalationMatrixTable extends StatefulWidget {
   final List<String> tableHeaders;
 
   @override
-  State<EscalationMatrixTable> createState() =>
-      _EscalationMatrixTableState();
+  State<EscalationMatrixTable> createState() => _EscalationMatrixTableState();
 }
 
-class _EscalationMatrixTableState
-    extends State<EscalationMatrixTable> {
+class _EscalationMatrixTableState extends State<EscalationMatrixTable> {
   var listOfPersons = [
     {
       'name': 'Dipa Majumdar',
@@ -421,7 +647,8 @@ class _EscalationMatrixTableState
           children: widget.tableHeaders.map<Widget>(
             (tableHeader) {
               return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 6.0),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 4.0, vertical: 6.0),
                 child: Text(
                   tableHeader,
                   style: TextStyle(
@@ -444,26 +671,35 @@ class _EscalationMatrixTableState
           ),
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 6.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 4.0, vertical: 6.0),
               child: Text(
                 'Level 1',
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 2.0,),
+              padding: const EdgeInsets.symmetric(
+                vertical: 4.0,
+                horizontal: 2.0,
+              ),
               child: DropdownButton(
-                icon: Icon(Icons.keyboard_arrow_down, size: 15,),
+                icon: Icon(
+                  Icons.keyboard_arrow_down,
+                  size: 15,
+                ),
                 isExpanded: true,
                 style: TextStyle(
                   fontSize: 12.5,
                   color: Colors.black,
                 ),
-                items: listOfPersons.map<DropdownMenuItem>((person) {
-                  return DropdownMenuItem(
-                    value: person['name'],
-                    child: Text('${person['name']}'),
-                  );
-                },).toList(),
+                items: listOfPersons.map<DropdownMenuItem>(
+                  (person) {
+                    return DropdownMenuItem(
+                      value: person['name'],
+                      child: Text('${person['name']}'),
+                    );
+                  },
+                ).toList(),
                 onChanged: (value) {
                   setState(() {
                     level1State = value;
@@ -474,11 +710,11 @@ class _EscalationMatrixTableState
             ),
             Padding(
               padding: const EdgeInsets.all(4.0),
-              child: Text(
-                listOfPersons.where((person) => person['name'] == level1State).first['role'] ?? 'Project Manager'
-              ),
+              child: Text(listOfPersons
+                      .where((person) => person['name'] == level1State)
+                      .first['role'] ??
+                  'Project Manager'),
             ),
-
           ],
         ),
         TableRow(
@@ -492,26 +728,35 @@ class _EscalationMatrixTableState
           ),
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 6.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 4.0, vertical: 6.0),
               child: Text(
                 'Level 2',
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 2.0,),
+              padding: const EdgeInsets.symmetric(
+                vertical: 4.0,
+                horizontal: 2.0,
+              ),
               child: DropdownButton(
-                icon: Icon(Icons.keyboard_arrow_down, size: 15,),
+                icon: Icon(
+                  Icons.keyboard_arrow_down,
+                  size: 15,
+                ),
                 isExpanded: true,
                 style: TextStyle(
                   fontSize: 12.5,
                   color: Colors.black,
                 ),
-                items: listOfPersons.map<DropdownMenuItem>((person) {
-                  return DropdownMenuItem(
-                    value: person['name'],
-                    child: Text('${person['name']}'),
-                  );
-                },).toList(),
+                items: listOfPersons.map<DropdownMenuItem>(
+                  (person) {
+                    return DropdownMenuItem(
+                      value: person['name'],
+                      child: Text('${person['name']}'),
+                    );
+                  },
+                ).toList(),
                 onChanged: (value) {
                   setState(() {
                     level2State = value;
@@ -522,11 +767,11 @@ class _EscalationMatrixTableState
             ),
             Padding(
               padding: const EdgeInsets.all(4.0),
-              child: Text(
-                listOfPersons.where((person) => person['name'] == level2State).first['role'] ?? 'Project Manager'
-              ),
+              child: Text(listOfPersons
+                      .where((person) => person['name'] == level2State)
+                      .first['role'] ??
+                  'Project Manager'),
             ),
-
           ],
         ),
         TableRow(
@@ -540,26 +785,35 @@ class _EscalationMatrixTableState
           ),
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 6.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 4.0, vertical: 6.0),
               child: Text(
                 'Level 3',
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 2.0,),
+              padding: const EdgeInsets.symmetric(
+                vertical: 4.0,
+                horizontal: 2.0,
+              ),
               child: DropdownButton(
-                icon: Icon(Icons.keyboard_arrow_down, size: 15,),
+                icon: Icon(
+                  Icons.keyboard_arrow_down,
+                  size: 15,
+                ),
                 isExpanded: true,
                 style: TextStyle(
                   fontSize: 12.5,
                   color: Colors.black,
                 ),
-                items: listOfPersons.map<DropdownMenuItem>((person) {
-                  return DropdownMenuItem(
-                    value: person['name'],
-                    child: Text('${person['name']}'),
-                  );
-                },).toList(),
+                items: listOfPersons.map<DropdownMenuItem>(
+                  (person) {
+                    return DropdownMenuItem(
+                      value: person['name'],
+                      child: Text('${person['name']}'),
+                    );
+                  },
+                ).toList(),
                 onChanged: (value) {
                   setState(() {
                     level3State = value;
@@ -570,11 +824,11 @@ class _EscalationMatrixTableState
             ),
             Padding(
               padding: const EdgeInsets.all(4.0),
-              child: Text(
-                listOfPersons.where((person) => person['name'] == level3State).first['role'] ?? 'Project Manager'
-              ),
+              child: Text(listOfPersons
+                      .where((person) => person['name'] == level3State)
+                      .first['role'] ??
+                  'Project Manager'),
             ),
-
           ],
         ),
       ],
