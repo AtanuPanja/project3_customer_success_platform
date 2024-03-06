@@ -125,7 +125,8 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      if (currentOrientation == Orientation.landscape && widget.members != '0')
+                      if (currentOrientation == Orientation.landscape &&
+                          widget.members != '0')
                         Text('Members'),
                       switch (widget.members) {
                         '0' => Text('No members'),
@@ -254,18 +255,32 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
                 ],
               ),
               // the project name with the profiles widget ends here
-              OutlinedButton(
+              ElevatedButton(
                 style: ButtonStyle(
-                  maximumSize: MaterialStateProperty.all(Size(
-                    screenWidth / 2,
-                    50,
-                  )),
+                  maximumSize: MaterialStateProperty.all(
+                    Size(
+                      screenWidth / 2,
+                      50,
+                    ),
+                  ),
+                  backgroundColor: MaterialStateProperty.all(Theme.of(context).scaffoldBackgroundColor),
+                  foregroundColor: MaterialStateProperty.all(Colors.grey.shade700),
+                  elevation: MaterialStateProperty.all(0.0),
+                  side: MaterialStateProperty.all(
+                    BorderSide(
+                      color: Colors.grey.shade700,
+                    ),
+                  ),
                 ),
                 onPressed: () {},
-                child: Row(children: [
-                  Icon(Icons.person),
-                  Text('Invite Members'),
-                ]),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(Icons.person),
+                    Text('Invite Members'),
+                  ],
+                ),
               ),
               Container(
                 decoration: BoxDecoration(
