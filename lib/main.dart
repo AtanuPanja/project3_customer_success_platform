@@ -33,7 +33,7 @@ class MainApp extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      home: const SafeArea(child: const HomeScreen()),
+      home: const SafeArea(child: HomeScreen()),
     );
   }
 }
