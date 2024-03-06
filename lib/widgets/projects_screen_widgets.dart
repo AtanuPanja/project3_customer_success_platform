@@ -66,28 +66,28 @@ class _ProjectListingState extends State<ProjectListing> {
       'start_date': '12 Feb 24',
       'status': 'On going',
       'project_manager': 'Dipa Majumdar',
-      'members': '6'
+      'members': '0'
     },
     {
       'name': '2023-01-01',
       'start_date': '1 Jan 24',
       'status': 'Closed',
       'project_manager': 'Dipa Majumdar',
-      'members': '12'
+      'members': '1'
     },
     {
       'name': '2023-01-01',
       'start_date': 'Placeholder for start date',
       'status': 'In progress',
       'project_manager': 'Dipa Majumdar',
-      'members': '14'
+      'members': '2'
     },
     {
       'name': '2023-01-01',
       'start_date': 'Placeholder for start date',
       'status': 'In progress',
       'project_manager': 'Dipa Majumdar',
-      'members': '4'
+      'members': '3'
     },
     {
       'name': '2023-01-01',
@@ -285,6 +285,7 @@ class _ProjectListingState extends State<ProjectListing> {
                             MaterialPageRoute(
                               builder: (context) => ProjectDetailsScreen(
                                 projectName: project['name'] ?? 'Food on time',
+                                members: project['members'] ?? '10',
                               ),
                             ),
                           );
