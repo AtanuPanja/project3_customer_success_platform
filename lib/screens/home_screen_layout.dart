@@ -16,8 +16,8 @@ class _HomeScreenState extends State<HomeScreen> {
   int currentIndex = 0;
 
   List<Widget> widgetOptions = [
-    ProjectsScreen(),
-    NewProjectStepper(),
+    const ProjectsScreen(),
+    const NewProjectStepper(),
   ];
 
   void onOptionSelected(int index) {
@@ -115,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  onOptionSelected(1);
+                  onOptionSelected(widgetOptions.length - 1);
                   Navigator.pop(context);
                 },
                 child: const Row(
@@ -128,7 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 7),
               ListTile(
                 selected: currentIndex == 0,
-                selectedTileColor: Color.fromARGB(68, 0, 113, 234),
+                selectedTileColor: const Color.fromARGB(68, 0, 113, 234),
                 selectedColor: Colors.black,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(4.0),
@@ -176,3 +176,4 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+
