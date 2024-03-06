@@ -283,7 +283,9 @@ class _ProjectListingState extends State<ProjectListing> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => ProjectDetailsScreen(),
+                              builder: (context) => ProjectDetailsScreen(
+                                projectName: project['name'] ?? 'Food on time',
+                              ),
                             ),
                           );
                         },
