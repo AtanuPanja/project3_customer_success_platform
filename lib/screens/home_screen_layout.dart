@@ -13,18 +13,49 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
+  // saving the data from the file list_of_projects.dart, into state variable listOfProjects
   var listOfProjects = projects_data.listOfProjects;
+
+  // method to update the list of projects in the state
   void updateListOfProjects() {
     setState(() {
       listOfProjects = projects_data.listOfProjects;
     });
   }
-  int currentIndex = 0;
 
-  void onOptionSelected(int index) {
+  // list of items to show in the drawer
+  List<Map<String, dynamic>> listOfDrawerTiles = [
+    {
+      'tileName': 'Projects',
+      'icon': const Icon(Icons.card_travel_rounded),
+    },
+    {
+      'tileName': 'Project Managers',
+      'icon': const Icon(
+        Icons.person_outlined,
+      ),
+    },
+    {
+      'tileName': 'Employees',
+      'icon': const Icon(
+        Icons.person_add_alt_1_outlined,
+      ),
+    },
+    {
+      'tileName': 'Settings',
+      'icon': const Icon(
+        Icons.settings_outlined,
+      ),
+    },
+  ];
+
+  // state variable to indicate which tile is selected
+  int drawerTileSelected = 0;
+
+  // method to update the selected drawer tile
+  void setDrawerTileSelected(int index) {
     setState(() {
-      currentIndex = index;
+      drawerTileSelected = index;
     });
   }
 
@@ -37,6 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
         leading: Padding(
           padding: const EdgeInsets.only(left: 8.0, top: 24.0, bottom: 24.0),
           child: Builder(
+            // app logo widget, to be clicked to open the drawer
             builder: (context) => InkWell(
               child: Container(
                 decoration: BoxDecoration(
@@ -56,8 +88,6 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         title: TextFormField(
           decoration: InputDecoration(
-            // fillColor: Colors.grey.shade200,
-            // filled: true,
             border: OutlineInputBorder(
               borderSide: BorderSide(
                 color: Colors.grey.shade700,
@@ -97,7 +127,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: 100,
                       height: 100,
                       decoration: BoxDecoration(
-                        // color: Color.fromARGB(255, 0, 115, 234),
                         borderRadius: BorderRadius.circular(8.0),
                         image: const DecorationImage(
                           image: AssetImage('assets/images/logo.png'),
@@ -123,8 +152,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     context,
                     MaterialPageRoute(
                       builder: ((context) => CreateProjectScreen(
-                        updateListOfProjects: updateListOfProjects,
-                      )),
+                            updateListOfProjects: updateListOfProjects,
+                          )),
                     ),
                   );
                 },
@@ -136,48 +165,23 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               const SizedBox(height: 7),
-              ListTile(
-                selected: currentIndex == 0,
-                selectedTileColor: const Color.fromARGB(68, 0, 113, 234),
-                selectedColor: Colors.black,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(4.0),
-                ),
-                leading: const Icon(
-                  Icons.card_travel_rounded,
-                ),
-                title: const Text('Projects'),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                selectedTileColor: const Color.fromARGB(68, 0, 113, 234),
-                selectedColor: Colors.black,
-                leading: const Icon(
-                  Icons.person_outlined,
-                ),
-                title: const Text('Project Managers'),
-                onTap: () {},
-              ),
-              ListTile(
-                selectedTileColor: const Color.fromARGB(68, 0, 113, 234),
-                selectedColor: Colors.black,
-                leading: const Icon(
-                  Icons.person_add_alt_1_outlined,
-                ),
-                title: const Text('Employees'),
-                onTap: () {},
-              ),
-              ListTile(
-                selectedTileColor: const Color.fromARGB(68, 0, 113, 234),
-                selectedColor: Colors.black,
-                leading: const Icon(
-                  Icons.settings_outlined,
-                ),
-                title: const Text('Settings'),
-                onTap: () {},
-              ),
+              ...listOfDrawerTiles.asMap().entries.map<ListTile>((e) {
+                return ListTile(
+                  selected: drawerTileSelected == e.key,
+                  selectedTileColor: const Color.fromARGB(68, 0, 113, 234),
+                  selectedColor: Colors.black,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(4.0),
+                  ),
+                  leading:
+                      e.value['icon'] ?? const Icon(Icons.card_travel_rounded),
+                  title: Text(e.value['tileName'] ?? 'Projects'),
+                  onTap: () {
+                    setDrawerTileSelected(e.key);
+                    Navigator.pop(context);
+                  },
+                );
+              }),
             ],
           ),
         ),

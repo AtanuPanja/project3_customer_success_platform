@@ -14,10 +14,13 @@ class CreateProjectScreen extends StatefulWidget {
 }
 
 class _CreateProjectScreenState extends State<CreateProjectScreen> {
+  // state variable to handle the form state
   final GlobalKey<FormState> _firstFormKey = GlobalKey<FormState>();
   final FocusNode projectNameFocus = FocusNode();
 
+  // this controller holds the value entered into the project name field
   TextEditingController projectNameController = TextEditingController();
+
   List<TextEditingController> firstFormControllers = [
     TextEditingController(),
     TextEditingController(),
@@ -26,8 +29,10 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
     TextEditingController(),
   ];
 
+  // this state variable is used to keep track of which step of the multi-step form is currently active
   int currentStep = 0;
 
+  // this state variable is used to track the selected option from the dropdown menu
   String selectedOptionFromDropdown = 'Project Manager One';
 
   List<String> listOfProjectManagers = [
@@ -46,8 +51,8 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
       body: Theme(
         data: Theme.of(context).copyWith(
           colorScheme: Theme.of(context).colorScheme.copyWith(
-            primary: const Color.fromARGB(255, 0, 115, 234),
-          ),
+                primary: const Color.fromARGB(255, 0, 115, 234),
+              ),
         ),
         child: Stepper(
           controlsBuilder: (context, details) {
@@ -64,20 +69,23 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
                 onPressed: () {
                   setState(() {
                     // since there are three steps, steps.length replaced with 3
-                      if (currentStep == 0) {
-                        bool firstFormIsValid = _firstFormKey.currentState?.validate() ?? false;
-                        if (!firstFormIsValid) {
-                          return;
-                        }
-                        currentStep += 1;
-                      } else if(currentStep == 2) {
-                        projects_data.addNewProject(projectNameController.text);
-                        widget.updateListOfProjects();
-                        Navigator.of(context).pop();
-                      } else {
-                        currentStep += 1;
+                    if (currentStep == 0) {
+                      // currentStep = 0, denotes the first form
+                      // here we validate the project name field.
+                      // calling the formKey.currentKey.validate() method, calls the validator as defined in the textformfield
+                      bool firstFormIsValid =
+                          _firstFormKey.currentState?.validate() ?? false;
+                      if (!firstFormIsValid) {
+                        return;
                       }
-                      
+                      currentStep += 1;
+                    } else if (currentStep == 2) {
+                      projects_data.addNewProject(projectNameController.text);
+                      widget.updateListOfProjects();
+                      Navigator.of(context).pop();
+                    } else {
+                      currentStep += 1;
+                    }
                   });
                 },
               ),
@@ -91,7 +99,12 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
                 color: Colors.white,
               );
             } else {
-              return Text('${stepIndex + 1}', style: const TextStyle(color: Colors.white,),);
+              return Text(
+                '${stepIndex + 1}',
+                style: const TextStyle(
+                  color: Colors.white,
+                ),
+              );
             }
           },
           currentStep: currentStep,
