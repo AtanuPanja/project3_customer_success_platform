@@ -77,3 +77,23 @@ var listOfProjects = [
       'members': '100'
     },
 ];
+
+void addNewProject(
+  String name,
+  [
+    String start_date = '2023-01-01',
+    String status = 'In progress',
+    String project_manager = 'Dipa Majumdar',
+    String members = '2',
+  ]
+) {
+  Map<String, String> newEntry = {
+    'name': name,
+    'start_date': start_date,
+    'status': status,
+    'project_manager': project_manager,
+    'members': members,
+  };
+
+  listOfProjects.insert(0, newEntry);
+}
