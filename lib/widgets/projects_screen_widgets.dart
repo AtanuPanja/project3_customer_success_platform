@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project3_customer_success_platform/screens/project_detail_screen.dart';
-import '../data/list_of_projects.dart' as projects_data;
+
 
 class ProjectsCardDisplay extends StatelessWidget {
   const ProjectsCardDisplay({
@@ -54,14 +54,18 @@ class ProjectsCardDisplay extends StatelessWidget {
 }
 
 class ProjectListing extends StatefulWidget {
-  const ProjectListing({super.key});
+  const ProjectListing({
+    super.key,
+    required this.listOfProjects,
+  });
+
+  final List<Map<String,String>> listOfProjects;
 
   @override
   State<ProjectListing> createState() => _ProjectListingState();
 }
 
 class _ProjectListingState extends State<ProjectListing> {
-  var listOfProjects = projects_data.listOfProjects;
 
   String selectedTab = 'All Projects';
   List<String> tabs = ['All Projects', 'In progress', 'Completed', 'Hold'];
@@ -180,14 +184,14 @@ class _ProjectListingState extends State<ProjectListing> {
                 ).toList(),
               ),
               ...switch (selectedTab) {
-                'All Projects' => listOfProjects,
-                'In progress' => listOfProjects
+                'All Projects' => widget.listOfProjects,
+                'In progress' => widget.listOfProjects
                     .where((project) => project['status'] == 'In progress'),
-                'Completed' => listOfProjects
+                'Completed' => widget.listOfProjects
                     .where((project) => project['status'] == 'Closed'),
-                'Hold' => listOfProjects
+                'Hold' => widget.listOfProjects
                     .where((project) => project['status'] == 'Hold'),
-                _ => listOfProjects,
+                _ => widget.listOfProjects,
               }
                   .map<TableRow>(
                 (project) {

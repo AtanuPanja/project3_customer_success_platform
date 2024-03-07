@@ -1,15 +1,24 @@
 import 'package:flutter/material.dart';
 import '../widgets/projects_screen_widgets.dart';
 
-class ProjectsScreen extends StatelessWidget {
-  const ProjectsScreen({super.key});
+class ProjectsScreen extends StatefulWidget {
+  const ProjectsScreen({
+    super.key,
+    required this.listOfProjects,
+  });
+  final List<Map<String, String>> listOfProjects;
 
   @override
+  State<ProjectsScreen> createState() => _ProjectsScreenState();
+}
+
+class _ProjectsScreenState extends State<ProjectsScreen> {
+  @override
   Widget build(BuildContext context) {
-    return const SingleChildScrollView(
+    return SingleChildScrollView(
       child: Column(
         children: [
-          SingleChildScrollView(
+          const SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [
@@ -32,8 +41,9 @@ class ProjectsScreen extends StatelessWidget {
               ],
             ),
           ),
-
-          ProjectListing(),
+          ProjectListing(
+            listOfProjects: widget.listOfProjects,
+          ),
         ],
       ),
     );
