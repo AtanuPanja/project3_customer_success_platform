@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:project3_customer_success_platform/screens/create_project_screen.dart';
 import 'projects_screen.dart';
-import '../widgets/new_project_stepper.dart';
+import '../data/list_of_projects.dart' as projects_data;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -13,12 +14,13 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
+  var listOfProjects = projects_data.listOfProjects;
+  void updateListOfProjects() {
+    setState(() {
+      listOfProjects = projects_data.listOfProjects;
+    });
+  }
   int currentIndex = 0;
-
-  List<Widget> widgetOptions = [
-    const ProjectsScreen(),
-    const NewProjectStepper(),
-  ];
 
   void onOptionSelected(int index) {
     setState(() {
@@ -33,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         toolbarHeight: 100,
         leading: Padding(
-          padding: const EdgeInsets.only(left: 8.0,  top: 24.0, bottom: 24.0),
+          padding: const EdgeInsets.only(left: 8.0, top: 24.0, bottom: 24.0),
           child: Builder(
             builder: (context) => InkWell(
               child: Container(
@@ -53,7 +55,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         title: TextFormField(
-          
           decoration: InputDecoration(
             // fillColor: Colors.grey.shade200,
             // filled: true,
@@ -78,7 +79,9 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      body: widgetOptions[currentIndex],
+      body: ProjectsScreen(
+        listOfProjects: listOfProjects,
+      ),
       drawer: Drawer(
         width: screenWidth - 50,
         elevation: 2,
@@ -115,8 +118,15 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  onOptionSelected(widgetOptions.length - 1);
                   Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: ((context) => CreateProjectScreen(
+                        updateListOfProjects: updateListOfProjects,
+                      )),
+                    ),
+                  );
                 },
                 child: const Row(
                   children: [
@@ -138,7 +148,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 title: const Text('Projects'),
                 onTap: () {
-                  onOptionSelected(0);
                   Navigator.pop(context);
                 },
               ),
@@ -153,7 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               ListTile(
                 selectedTileColor: const Color.fromARGB(68, 0, 113, 234),
-                selectedColor: Colors.black,  
+                selectedColor: Colors.black,
                 leading: const Icon(
                   Icons.person_add_alt_1_outlined,
                 ),
@@ -176,4 +185,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
