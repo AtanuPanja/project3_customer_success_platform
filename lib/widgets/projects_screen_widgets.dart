@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project3_customer_success_platform/screens/project_detail_screen.dart';
 
-
 class ProjectsCardDisplay extends StatelessWidget {
   const ProjectsCardDisplay({
     super.key,
@@ -53,20 +52,134 @@ class ProjectsCardDisplay extends StatelessWidget {
   }
 }
 
+class ProjectsListItem extends StatelessWidget {
+  const ProjectsListItem({
+    super.key,
+    required this.allProjectsIsActive,
+    required this.name,
+    required this.startDate,
+    required this.status,
+    required this.projectManager,
+    required this.members,
+  });
+  final bool allProjectsIsActive;
+  final String name;
+  final String startDate;
+  final String status;
+  final String projectManager;
+  final String members;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ProjectDetailsScreen(
+                projectName: name,
+                members: members,
+              ),
+            ),
+          );
+        },
+        child: Stack(
+          children: [
+            if (allProjectsIsActive)
+              Positioned(
+                right: 0,
+                child: Container(
+                  padding: EdgeInsets.all(8.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(8.0),
+                    ),
+                    color: switch (status) {
+                      'On going' || 'In progress' => Colors.green,
+                      'Closed' => Colors.red,
+                      'Hold' => Colors.black,
+                      _ => Colors.transparent,
+                    },
+                  ),
+                  child: Text(
+                    status,
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ListTile(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              tileColor: Colors.white,
+              leading: Icon(Icons.article_outlined),
+              title: Text(name),
+              subtitle: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(startDate),
+                    RichText(
+                      text: TextSpan(
+                        style: TextStyle(
+                          color: Colors.black,
+                        ),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: 'Project Manager: ',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          TextSpan(text: projectManager),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade300,
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      margin: EdgeInsets.only(top: 8.0),
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(
+                        switch (members) {
+                          '0' => 'No members',
+                          '1' => '1 member',
+                          _ => "$members members",
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              isThreeLine: true,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class ProjectListing extends StatefulWidget {
   const ProjectListing({
     super.key,
     required this.listOfProjects,
   });
 
-  final List<Map<String,String>> listOfProjects;
+  final List<Map<String, String>> listOfProjects;
 
   @override
   State<ProjectListing> createState() => _ProjectListingState();
 }
 
 class _ProjectListingState extends State<ProjectListing> {
-
   String selectedTab = 'All Projects';
   List<String> tabs = ['All Projects', 'In progress', 'Completed', 'Hold'];
   List<String> tableHeaders = [
@@ -152,37 +265,8 @@ class _ProjectListingState extends State<ProjectListing> {
           const SizedBox(
             height: 10,
           ),
-          Table(
-            border: TableBorder.symmetric(
-              outside: BorderSide(
-                color: Colors.grey.shade300,
-              ),
-            ),
+          Column(
             children: [
-              TableRow(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border(
-                    bottom: BorderSide(
-                      color: Colors.grey.shade300,
-                    ),
-                  ),
-                ),
-                children: tableHeaders.map<Widget>(
-                  (tableHeader) {
-                    return Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: Text(
-                        tableHeader,
-                        style: TextStyle(
-                          color: Colors.grey.shade600,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    );
-                  },
-                ).toList(),
-              ),
               ...switch (selectedTab) {
                 'All Projects' => widget.listOfProjects,
                 'In progress' => widget.listOfProjects
@@ -193,78 +277,16 @@ class _ProjectListingState extends State<ProjectListing> {
                     .where((project) => project['status'] == 'Hold'),
                 _ => widget.listOfProjects,
               }
-                  .map<TableRow>(
+                  .map<ProjectsListItem>(
                 (project) {
-                  return TableRow(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border(
-                        bottom: BorderSide(
-                          color: Colors.grey.shade300,
-                        ),
-                      ),
-                    ),
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ProjectDetailsScreen(
-                                projectName: project['name'] ?? 'Food on time',
-                                members: project['members'] ?? '10',
-                              ),
-                            ),
-                          );
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: Text(
-                            '${project['name']}',
-                            style: const TextStyle(
-                              decoration: TextDecoration.underline,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: Text(
-                          '${project['start_date']}',
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.symmetric(vertical: 5.0),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 4.0, vertical: 2.0),
-                        decoration: BoxDecoration(
-                          color: switch (project['status']) {
-                            'On going' ||
-                            'In progress' =>
-                              const Color.fromARGB(255, 49, 135, 80),
-                            'Closed' => const Color.fromARGB(255, 216, 58, 82),
-                            'Hold' => Colors.black,
-                            _ => Colors.transparent,
-                          },
-                          borderRadius: BorderRadius.circular(4.0),
-                        ),
-                        child: Text(
-                          '${project['status']}',
-                          style: const TextStyle(
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: Text('${project['project_manager']}'),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: Text('${project['members']}'),
-                      ),
-                    ],
+                  return ProjectsListItem(
+                    allProjectsIsActive: selectedTab == 'All Projects',
+                    name: project['name'] ?? 'project',
+                    startDate: project['start_date'] ?? 'start_date',
+                    status: project['status'] ?? 'No status',
+                    projectManager:
+                        project['project_manager'] ?? 'No project manager',
+                    members: project['members'] ?? '0',
                   );
                 },
               )
