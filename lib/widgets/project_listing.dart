@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/sort_button.dart';
 import '../utils/colors.dart';
 import 'projects_list_item.dart';
 
@@ -15,13 +16,37 @@ class ProjectListing extends StatefulWidget {
 }
 
 class _ProjectListingState extends State<ProjectListing> {
+  List<Map<String, String>> listOfProjects = [];
   String selectedTab = 'All Projects';
   List<String> tabs = ['All Projects', 'In progress', 'Completed', 'Hold'];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    listOfProjects = widget.listOfProjects;
+  }
 
   void setSelectedTab(String tabName) {
     setState(() {
       selectedTab = tabName;
     });
+  }
+
+  void sortProjectsByMembers({bool descending = false}) {
+    if (descending) {
+      setState(() {
+        listOfProjects.sort((a, b) {
+          return int.parse(b['members']!) - int.parse(a['members']!);
+        });
+      });
+    } else {
+      setState(() {
+        listOfProjects.sort((a, b) {
+          return int.parse(a['members']!) - int.parse(b['members']!);
+        });
+      });
+    }
   }
 
   @override
@@ -75,18 +100,9 @@ class _ProjectListingState extends State<ProjectListing> {
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              InkWell(
-                child: const Row(
-                  children: [
-                    Icon(
-                      Icons.arrow_upward,
-                    ),
-                    Icon(
-                      Icons.arrow_downward,
-                    ),
-                  ],
-                ),
-                onTap: () {},
+              SortButton(
+                sortAsc: () => sortProjectsByMembers(),
+                sortDesc: () => sortProjectsByMembers(descending: true),
               ),
             ],
           ),
@@ -96,14 +112,14 @@ class _ProjectListingState extends State<ProjectListing> {
           Column(
             children: [
               ...switch (selectedTab) {
-                'All Projects' => widget.listOfProjects,
-                'In progress' => widget.listOfProjects
+                'All Projects' => listOfProjects,
+                'In progress' => listOfProjects
                     .where((project) => project['status'] == 'In progress'),
-                'Completed' => widget.listOfProjects
+                'Completed' => listOfProjects
                     .where((project) => project['status'] == 'Closed'),
-                'Hold' => widget.listOfProjects
+                'Hold' => listOfProjects
                     .where((project) => project['status'] == 'Hold'),
-                _ => widget.listOfProjects,
+                _ => listOfProjects,
               }
                   .map<ProjectsListItem>(
                 (project) {
