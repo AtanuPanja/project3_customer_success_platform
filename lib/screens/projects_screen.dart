@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../widgets/projects_screen_widgets.dart';
+import '../widgets/projects_card.dart';
+import '../widgets/project_listing.dart';
 
 class ProjectsScreen extends StatefulWidget {
   const ProjectsScreen({
@@ -22,19 +23,19 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [
-                ProjectsCardDisplay(
+                ProjectsCard(
                   count: '41',
                   type: 'All Projects',
                 ),
-                ProjectsCardDisplay(
+                ProjectsCard(
                   count: '24',
                   type: 'In Progress',
                 ),
-                ProjectsCardDisplay(
+                ProjectsCard(
                   count: '12',
                   type: 'Completed',
                 ),
-                ProjectsCardDisplay(
+                ProjectsCard(
                   count: '5',
                   type: 'Hold',
                 ),

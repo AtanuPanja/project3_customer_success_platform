@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../data/list_of_projects.dart' as projects_data;
+import '../utils/colors.dart';
 
 class CreateProjectScreen extends StatefulWidget {
   const CreateProjectScreen({
@@ -51,7 +52,7 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
       body: Theme(
         data: Theme.of(context).copyWith(
           colorScheme: Theme.of(context).colorScheme.copyWith(
-                primary: const Color.fromARGB(255, 0, 115, 234),
+                primary: AppColors.primaryDarkBlue,
               ),
         ),
         child: Stepper(

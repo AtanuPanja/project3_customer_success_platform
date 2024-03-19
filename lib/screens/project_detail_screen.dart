@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../utils/colors.dart';
 
 class ProjectDetailsScreen extends StatefulWidget {
   const ProjectDetailsScreen({
@@ -263,12 +264,14 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
                       50,
                     ),
                   ),
-                  backgroundColor: MaterialStateProperty.all(Theme.of(context).scaffoldBackgroundColor),
-                  foregroundColor: MaterialStateProperty.all(Colors.grey.shade700),
+                  backgroundColor: MaterialStateProperty.all(
+                      Theme.of(context).scaffoldBackgroundColor),
+                  foregroundColor:
+                      MaterialStateProperty.all(AppColors.dividerColor),
                   elevation: MaterialStateProperty.all(0.0),
                   side: MaterialStateProperty.all(
                     BorderSide(
-                      color: Colors.grey.shade700,
+                      color: AppColors.dividerColor,
                     ),
                   ),
                 ),
@@ -314,7 +317,8 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
                 child: Column(
                   children: [
                     switch (currentTab) {
@@ -642,6 +646,8 @@ class _EscalationMatrixTableState extends State<EscalationMatrixTable> {
 
   @override
   Widget build(BuildContext context) {
+    bool darkModeIsActive =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
     return Table(
       defaultVerticalAlignment: TableCellVerticalAlignment.middle,
       border: TableBorder.symmetric(
@@ -652,7 +658,6 @@ class _EscalationMatrixTableState extends State<EscalationMatrixTable> {
       children: [
         TableRow(
           decoration: BoxDecoration(
-            color: Colors.white,
             border: Border(
               bottom: BorderSide(
                 color: Colors.grey.shade400,
@@ -667,7 +672,6 @@ class _EscalationMatrixTableState extends State<EscalationMatrixTable> {
                 child: Text(
                   tableHeader,
                   style: TextStyle(
-                    color: Colors.grey.shade600,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -677,7 +681,6 @@ class _EscalationMatrixTableState extends State<EscalationMatrixTable> {
         ),
         TableRow(
           decoration: BoxDecoration(
-            color: Colors.white,
             border: Border(
               bottom: BorderSide(
                 color: Colors.grey.shade400,
@@ -686,8 +689,7 @@ class _EscalationMatrixTableState extends State<EscalationMatrixTable> {
           ),
           children: [
             const Padding(
-              padding:
-                  EdgeInsets.symmetric(horizontal: 4.0, vertical: 6.0),
+              padding: EdgeInsets.symmetric(horizontal: 4.0, vertical: 6.0),
               child: Text(
                 'Level 1',
               ),
@@ -703,9 +705,11 @@ class _EscalationMatrixTableState extends State<EscalationMatrixTable> {
                   size: 15,
                 ),
                 isExpanded: true,
-                style: const TextStyle(
+                style: TextStyle(
+                  color: darkModeIsActive
+                      ? AppColors.appDarkFgColor
+                      : AppColors.appFgColor,
                   fontSize: 12.5,
-                  color: Colors.black,
                 ),
                 items: listOfPersons.map<DropdownMenuItem>(
                   (person) {
@@ -734,7 +738,6 @@ class _EscalationMatrixTableState extends State<EscalationMatrixTable> {
         ),
         TableRow(
           decoration: BoxDecoration(
-            color: Colors.white,
             border: Border(
               bottom: BorderSide(
                 color: Colors.grey.shade400,
@@ -743,8 +746,7 @@ class _EscalationMatrixTableState extends State<EscalationMatrixTable> {
           ),
           children: [
             const Padding(
-              padding:
-                  EdgeInsets.symmetric(horizontal: 4.0, vertical: 6.0),
+              padding: EdgeInsets.symmetric(horizontal: 4.0, vertical: 6.0),
               child: Text(
                 'Level 2',
               ),
@@ -760,9 +762,11 @@ class _EscalationMatrixTableState extends State<EscalationMatrixTable> {
                   size: 15,
                 ),
                 isExpanded: true,
-                style: const TextStyle(
+                style: TextStyle(
+                  color: darkModeIsActive
+                      ? AppColors.appDarkFgColor
+                      : AppColors.appFgColor,
                   fontSize: 12.5,
-                  color: Colors.black,
                 ),
                 items: listOfPersons.map<DropdownMenuItem>(
                   (person) {
@@ -791,7 +795,6 @@ class _EscalationMatrixTableState extends State<EscalationMatrixTable> {
         ),
         TableRow(
           decoration: BoxDecoration(
-            color: Colors.white,
             border: Border(
               bottom: BorderSide(
                 color: Colors.grey.shade400,
@@ -800,8 +803,7 @@ class _EscalationMatrixTableState extends State<EscalationMatrixTable> {
           ),
           children: [
             const Padding(
-              padding:
-                  EdgeInsets.symmetric(horizontal: 4.0, vertical: 6.0),
+              padding: EdgeInsets.symmetric(horizontal: 4.0, vertical: 6.0),
               child: Text(
                 'Level 3',
               ),
@@ -817,9 +819,11 @@ class _EscalationMatrixTableState extends State<EscalationMatrixTable> {
                   size: 15,
                 ),
                 isExpanded: true,
-                style: const TextStyle(
+                style: TextStyle(
+                  color: darkModeIsActive
+                      ? AppColors.appDarkFgColor
+                      : AppColors.appFgColor,
                   fontSize: 12.5,
-                  color: Colors.black,
                 ),
                 items: listOfPersons.map<DropdownMenuItem>(
                   (person) {

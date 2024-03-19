@@ -169,7 +169,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 return ListTile(
                   selected: drawerTileSelected == e.key,
                   selectedTileColor: const Color.fromARGB(68, 0, 113, 234),
-                  selectedColor: Colors.black,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(4.0),
                   ),
