@@ -83,9 +83,20 @@ class _EscalationMatrixTableState extends State<EscalationMatrixTable> {
     },
   ];
 
-  String level1State = 'Dipa Majumdar';
-  String level2State = 'Dipa Majumdar';
-  String level3State = 'Dipa Majumdar';
+  List<Map<String, String>> levels = [
+    {
+      'name': 'Level 1',
+      'state': 'Dipa Majumdar',
+    },
+    {
+      'name': 'Level 2',
+      'state': 'Dipa Majumdar',
+    },
+    {
+      'name': 'Level 3',
+      'state': 'Dipa Majumdar',
+    },
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -122,177 +133,65 @@ class _EscalationMatrixTableState extends State<EscalationMatrixTable> {
             },
           ).toList(),
         ),
-        TableRow(
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(
-                color: Colors.grey.shade400,
+        ...levels.map<TableRow>((level) {
+          return TableRow(
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(
+                  color: Colors.grey.shade400,
+                ),
               ),
             ),
-          ),
-          children: [
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 4.0, vertical: 6.0),
-              child: Text(
-                'Level 1',
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 4.0,
-                horizontal: 2.0,
-              ),
-              child: DropdownButton(
-                icon: const Icon(
-                  Icons.keyboard_arrow_down,
-                  size: 15,
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 4.0, vertical: 6.0),
+                child: Text(
+                  level['name'] ?? 'Null level',
                 ),
-                isExpanded: true,
-                style: TextStyle(
-                  color: darkModeIsActive
-                      ? AppColors.appDarkFgColor
-                      : AppColors.appFgColor,
-                  fontSize: 12.5,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 4.0,
+                  horizontal: 2.0,
                 ),
-                items: listOfPersons.map<DropdownMenuItem>(
-                  (person) {
-                    return DropdownMenuItem(
-                      value: person['name'],
-                      child: Text('${person['name']}'),
-                    );
+                child: DropdownButton(
+                  icon: const Icon(
+                    Icons.keyboard_arrow_down,
+                    size: 15,
+                  ),
+                  isExpanded: true,
+                  style: TextStyle(
+                    color: darkModeIsActive
+                        ? AppColors.appDarkFgColor
+                        : AppColors.appFgColor,
+                    fontSize: 12.5,
+                  ),
+                  items: listOfPersons.map<DropdownMenuItem>(
+                    (person) {
+                      return DropdownMenuItem(
+                        value: person['name'],
+                        child: Text('${person['name']}'),
+                      );
+                    },
+                  ).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      level['state'] = value;
+                    });
                   },
-                ).toList(),
-                onChanged: (value) {
-                  setState(() {
-                    level1State = value;
-                  });
-                },
-                value: level1State,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: Text(listOfPersons
-                      .where((person) => person['name'] == level1State)
-                      .first['role'] ??
-                  'Project Manager'),
-            ),
-          ],
-        ),
-        TableRow(
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(
-                color: Colors.grey.shade400,
-              ),
-            ),
-          ),
-          children: [
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 4.0, vertical: 6.0),
-              child: Text(
-                'Level 2',
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 4.0,
-                horizontal: 2.0,
-              ),
-              child: DropdownButton(
-                icon: const Icon(
-                  Icons.keyboard_arrow_down,
-                  size: 15,
+                  value: level['state'],
                 ),
-                isExpanded: true,
-                style: TextStyle(
-                  color: darkModeIsActive
-                      ? AppColors.appDarkFgColor
-                      : AppColors.appFgColor,
-                  fontSize: 12.5,
-                ),
-                items: listOfPersons.map<DropdownMenuItem>(
-                  (person) {
-                    return DropdownMenuItem(
-                      value: person['name'],
-                      child: Text('${person['name']}'),
-                    );
-                  },
-                ).toList(),
-                onChanged: (value) {
-                  setState(() {
-                    level2State = value;
-                  });
-                },
-                value: level2State,
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: Text(listOfPersons
-                      .where((person) => person['name'] == level2State)
-                      .first['role'] ??
-                  'Project Manager'),
-            ),
-          ],
-        ),
-        TableRow(
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(
-                color: Colors.grey.shade400,
+              Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Text(listOfPersons
+                        .where((person) => person['name'] == level['state'])
+                        .first['role'] ??
+                    'Project Manager'),
               ),
-            ),
-          ),
-          children: [
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 4.0, vertical: 6.0),
-              child: Text(
-                'Level 3',
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 4.0,
-                horizontal: 2.0,
-              ),
-              child: DropdownButton(
-                icon: const Icon(
-                  Icons.keyboard_arrow_down,
-                  size: 15,
-                ),
-                isExpanded: true,
-                style: TextStyle(
-                  color: darkModeIsActive
-                      ? AppColors.appDarkFgColor
-                      : AppColors.appFgColor,
-                  fontSize: 12.5,
-                ),
-                items: listOfPersons.map<DropdownMenuItem>(
-                  (person) {
-                    return DropdownMenuItem(
-                      value: person['name'],
-                      child: Text('${person['name']}'),
-                    );
-                  },
-                ).toList(),
-                onChanged: (value) {
-                  setState(() {
-                    level3State = value;
-                  });
-                },
-                value: level3State,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: Text(listOfPersons
-                      .where((person) => person['name'] == level3State)
-                      .first['role'] ??
-                  'Project Manager'),
-            ),
-          ],
-        ),
+            ],
+          );
+        }),
       ],
     );
   }
