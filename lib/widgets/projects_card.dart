@@ -32,8 +32,9 @@ class ProjectsCard extends StatelessWidget {
           width: 1,
         ),
         borderRadius: BorderRadius.circular(8.0),
-        color:
-            darkModeIsActive ? AppColors.appDarkBgColor : AppColors.appBgColor,
+        color: darkModeIsActive
+            ? AppColors.listTileDarkColor
+            : AppColors.listTileColor,
       ),
       child: Column(
         children: [
