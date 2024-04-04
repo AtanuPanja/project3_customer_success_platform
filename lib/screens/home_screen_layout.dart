@@ -72,13 +72,14 @@ class _HomeScreenState extends State<HomeScreen> {
             builder: (context) => InkWell(
               child: Container(
                 decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 0, 115, 234),
+                  // color: const Color.fromARGB(255, 0, 115, 234),
                   borderRadius: BorderRadius.circular(8.0),
-                  image: const DecorationImage(
-                    image: AssetImage('assets/images/logo.png'),
-                    fit: BoxFit.contain,
-                  ),
+                  // image: const DecorationImage(
+                  //   image: AssetImage('assets/images/logo.png'),
+                  //   fit: BoxFit.contain,
+                  // ),
                 ),
+                child: Icon(Icons.menu),
               ),
               onTap: () {
                 Scaffold.of(context).openDrawer();
