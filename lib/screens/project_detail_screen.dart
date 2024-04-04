@@ -301,20 +301,23 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: tabs.map<Widget>(
                     (tabName) {
-                      return Container(
-                        width: 100,
-                        decoration: BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(
-                              color: currentTab == tabName
-                                  ? const Color.fromARGB(255, 0, 115, 234)
-                                  : Colors.transparent,
-                              width: 2,
+                      return InkWell(
+                        onTap: () => setCurrentTab(tabName),
+                        child: Container(
+                          width: 100,
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                color: currentTab == tabName
+                                    ? const Color.fromARGB(255, 0, 115, 234)
+                                    : Colors.transparent,
+                                width: 2,
+                              ),
                             ),
                           ),
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(tabName),
                         ),
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(tabName),
                       );
                     },
                   ).toList(),
