@@ -20,7 +20,7 @@ class _SortPopoverState extends State<SortPopover> {
     return ListView(
       children: [
         ListTile(
-          title: Row(
+          title: const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text('Sort by members'),
@@ -33,7 +33,7 @@ class _SortPopoverState extends State<SortPopover> {
           },
         ),
         ListTile(
-          title: Row(
+          title: const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text('Sort by members'),

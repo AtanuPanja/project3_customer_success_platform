@@ -45,9 +45,9 @@ class ProjectsListItem extends StatelessWidget {
               Positioned(
                 right: 0,
                 child: Container(
-                  padding: EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8.0),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(8.0),
                     ),
                     color: switch (status) {
@@ -61,7 +61,7 @@ class ProjectsListItem extends StatelessWidget {
                   ),
                   child: Text(
                     status,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                     ),
                   ),
@@ -74,7 +74,7 @@ class ProjectsListItem extends StatelessWidget {
               tileColor: darkModeIsActive
                   ? AppColors.listTileDarkColor
                   : AppColors.listTileColor,
-              leading: Icon(Icons.article_outlined),
+              leading: const Icon(Icons.article_outlined),
               title: Text(name),
               subtitle: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -84,7 +84,7 @@ class ProjectsListItem extends StatelessWidget {
                     Text(startDate),
                     Text(
                       "Project Manager: $projectManager",
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -95,8 +95,8 @@ class ProjectsListItem extends StatelessWidget {
                             : AppColors.appBgColor,
                         borderRadius: BorderRadius.circular(8.0),
                       ),
-                      margin: EdgeInsets.only(top: 8.0),
-                      padding: EdgeInsets.all(8.0),
+                      margin: const EdgeInsets.only(top: 8.0),
+                      padding: const EdgeInsets.all(8.0),
                       child: Text(
                         switch (members) {
                           '0' => 'No members',

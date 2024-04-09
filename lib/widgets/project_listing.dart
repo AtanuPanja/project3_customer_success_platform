@@ -16,13 +16,15 @@ class ProjectListing extends StatefulWidget {
 }
 
 class _ProjectListingState extends State<ProjectListing> {
+  // variable to hold the list of project in the current state
   List<Map<String, String>> listOfProjects = [];
+  // managing the state for the selected tab amongst the tabs
   String selectedTab = 'All Projects';
+  // all tabs as shown as categories in the table
   List<String> tabs = ['All Projects', 'In progress', 'Completed', 'Hold'];
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     listOfProjects = widget.listOfProjects;
   }
@@ -33,6 +35,7 @@ class _ProjectListingState extends State<ProjectListing> {
     });
   }
 
+  // sorting based on the members - ascending or descending
   void sortProjectsByMembers({bool descending = false}) {
     if (descending) {
       setState(() {
@@ -111,6 +114,7 @@ class _ProjectListingState extends State<ProjectListing> {
           ),
           Column(
             children: [
+              // filtering based on the tab name
               ...switch (selectedTab) {
                 'All Projects' => listOfProjects,
                 'In progress' => listOfProjects
