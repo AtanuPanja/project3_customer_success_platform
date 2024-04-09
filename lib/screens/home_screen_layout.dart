@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project3_customer_success_platform/screens/create_project_screen.dart';
+import '../widgets/app_logo_header.dart';
 import 'projects_screen.dart';
 import '../data/list_of_projects.dart' as projects_data;
 
@@ -25,28 +26,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   // list of items to show in the drawer
   List<Map<String, dynamic>> listOfDrawerTiles = [
-    {
-      'tileName': 'Projects',
-      'icon': const Icon(Icons.card_travel_rounded),
-    },
-    {
-      'tileName': 'Project Managers',
-      'icon': const Icon(
-        Icons.person_outlined,
-      ),
-    },
-    {
-      'tileName': 'Employees',
-      'icon': const Icon(
-        Icons.person_add_alt_1_outlined,
-      ),
-    },
-    {
-      'tileName': 'Settings',
-      'icon': const Icon(
-        Icons.settings_outlined,
-      ),
-    },
+    {'tileName': 'Projects', 'icon': const Icon(Icons.card_travel_rounded)},
+    {'tileName': 'Project Managers', 'icon': const Icon(Icons.person_outlined)},
+    {'tileName': 'Employees', 'icon': const Icon(Icons.person_add_alt_1_outlined)},
+    {'tileName': 'Settings', 'icon': const Icon(Icons.settings_outlined)},
   ];
 
   // state variable to indicate which tile is selected
@@ -68,18 +51,12 @@ class _HomeScreenState extends State<HomeScreen> {
         leading: Padding(
           padding: const EdgeInsets.only(left: 8.0, top: 24.0, bottom: 24.0),
           child: Builder(
-            // app logo widget, to be clicked to open the drawer
             builder: (context) => InkWell(
               child: Container(
                 decoration: BoxDecoration(
-                  // color: const Color.fromARGB(255, 0, 115, 234),
                   borderRadius: BorderRadius.circular(8.0),
-                  // image: const DecorationImage(
-                  //   image: AssetImage('assets/images/logo.png'),
-                  //   fit: BoxFit.contain,
-                  // ),
                 ),
-                child: Icon(Icons.menu),
+                child: const Icon(Icons.menu),
               ),
               onTap: () {
                 Scaffold.of(context).openDrawer();
@@ -120,31 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
           child: ListView(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
-                child: Column(
-                  children: [
-                    Container(
-                      width: 100,
-                      height: 100,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.0),
-                        image: const DecorationImage(
-                          image: AssetImage('assets/images/logo.png'),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                    const Text(
-                      'Customer Support',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 20,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              const AppLogoHeader(),
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
