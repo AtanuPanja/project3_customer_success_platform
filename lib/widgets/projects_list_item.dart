@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:project3_customer_success_platform/screens/project_detail_screen.dart';
+import 'package:project3_customer_success_platform/utils/constants/project_statuses.dart';
 
 import '../utils/colors.dart';
 
@@ -51,11 +52,10 @@ class ProjectsListItem extends StatelessWidget {
                       bottomLeft: Radius.circular(8.0),
                     ),
                     color: switch (status) {
-                      'On going' ||
-                      'In progress' =>
+                      ProjectStatuses.onGoing =>
                         AppColors.ongoingProjectColor,
-                      'Closed' => AppColors.closedProjectColor,
-                      'Hold' => AppColors.holdProjectColor,
+                      ProjectStatuses.completed => AppColors.closedProjectColor,
+                      ProjectStatuses.hold => AppColors.holdProjectColor,
                       _ => Colors.transparent,
                     },
                   ),

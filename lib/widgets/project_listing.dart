@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-import '../widgets/sort_button.dart';
+// import 'package:project3_customer_success_platform/data/list_of_projects.dart';
+// import 'dart:developer' as developer;
+import 'package:project3_customer_success_platform/utils/constants/project_statuses.dart';
+import '../model/project.dart';
+// import '../widgets/sort_button.dart';
 import '../utils/colors.dart';
 import 'projects_list_item.dart';
 
@@ -9,7 +13,7 @@ class ProjectListing extends StatefulWidget {
     required this.listOfProjects,
   });
 
-  final List<Map<String, String>> listOfProjects;
+  final List<Project> listOfProjects;
 
   @override
   State<ProjectListing> createState() => _ProjectListingState();
@@ -17,11 +21,11 @@ class ProjectListing extends StatefulWidget {
 
 class _ProjectListingState extends State<ProjectListing> {
   // variable to hold the list of project in the current state
-  List<Map<String, String>> listOfProjects = [];
+  List<Project> listOfProjects = [];
   // managing the state for the selected tab amongst the tabs
   String selectedTab = 'All Projects';
   // all tabs as shown as categories in the table
-  List<String> tabs = ['All Projects', 'In progress', 'Completed', 'Hold'];
+  List<String> tabs = ['All Projects', ProjectStatuses.onGoing, ProjectStatuses.completed, ProjectStatuses.hold];
 
   @override
   void initState() {
@@ -35,25 +39,26 @@ class _ProjectListingState extends State<ProjectListing> {
     });
   }
 
-  // sorting based on the members - ascending or descending
-  void sortProjectsByMembers({bool descending = false}) {
-    if (descending) {
-      setState(() {
-        listOfProjects.sort((a, b) {
-          return int.parse(b['members']!) - int.parse(a['members']!);
-        });
-      });
-    } else {
-      setState(() {
-        listOfProjects.sort((a, b) {
-          return int.parse(a['members']!) - int.parse(b['members']!);
-        });
-      });
-    }
-  }
+  // // sorting based on the members - ascending or descending
+  // void sortProjectsByMembers({bool descending = false}) {
+  //   if (descending) {
+  //     setState(() {
+  //       listOfProjects.sort((a, b) {
+  //         return int.parse(b['members']!) - int.parse(a['members']!);
+  //       });
+  //     });
+  //   } else {
+  //     setState(() {
+  //       listOfProjects.sort((a, b) {
+  //         return int.parse(a['members']!) - int.parse(b['members']!);
+  //       });
+  //     });
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
+    // consume the state from the ProjectsListProvider to build the ui
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -103,10 +108,10 @@ class _ProjectListingState extends State<ProjectListing> {
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              SortButton(
-                sortAsc: () => sortProjectsByMembers(),
-                sortDesc: () => sortProjectsByMembers(descending: true),
-              ),
+              // SortButton(
+              //   sortAsc: () => sortProjectsByMembers(),
+              //   sortDesc: () => sortProjectsByMembers(descending: true),
+              // ),
             ],
           ),
           const SizedBox(
@@ -117,24 +122,19 @@ class _ProjectListingState extends State<ProjectListing> {
               // filtering based on the tab name
               ...switch (selectedTab) {
                 'All Projects' => listOfProjects,
-                'In progress' => listOfProjects
-                    .where((project) => project['status'] == 'In progress'),
-                'Completed' => listOfProjects
-                    .where((project) => project['status'] == 'Closed'),
-                'Hold' => listOfProjects
-                    .where((project) => project['status'] == 'Hold'),
-                _ => listOfProjects,
+                
+                _ => listOfProjects.where((project) => project.status == selectedTab),
               }
                   .map<ProjectsListItem>(
                 (project) {
                   return ProjectsListItem(
                     allProjectsIsActive: selectedTab == 'All Projects',
-                    name: project['name'] ?? 'project',
-                    startDate: project['start_date'] ?? 'start_date',
-                    status: project['status'] ?? 'No status',
+                    name: project.name,
+                    startDate: project.startDate,
+                    status: project.status,
                     projectManager:
-                        project['project_manager'] ?? 'No project manager',
-                    members: project['members'] ?? '0',
+                        project.projectManager,
+                    members: project.members,
                   );
                 },
               )
