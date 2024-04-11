@@ -26,13 +26,14 @@ class ApiService {
   }
 
   // post data to the api, and check whether the operation is successful
-  static Future<bool> postHTTP(String path, Map body) async {
+  static Future<bool> postHTTP(String path, Map<String,dynamic> body) async {
     try {
-      Response response = await _dio.put(path, data: body);
+      Response response = await _dio.post(path, data: body);
+      developer.log(response.data.toString(), name: 'Response data in ApiService posthttp');
       int responseStatusCode = response.statusCode ?? 404;
       return (responseStatusCode >= 200 && responseStatusCode < 300);
     } catch (e) {
-      developer.log(e.toString(), name: 'Error in fetching data');
+      developer.log(e.toString(), name: 'Error in posting data');
       return false;
     }
   }
