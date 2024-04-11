@@ -21,7 +21,7 @@ class ProjectListing extends StatefulWidget {
 
 class _ProjectListingState extends State<ProjectListing> {
   // variable to hold the list of project in the current state
-  List<Project> listOfProjects = [];
+  // List<Project> listOfProjects = [];
   // managing the state for the selected tab amongst the tabs
   String selectedTab = 'All Projects';
   // all tabs as shown as categories in the table
@@ -30,7 +30,7 @@ class _ProjectListingState extends State<ProjectListing> {
   @override
   void initState() {
     super.initState();
-    listOfProjects = widget.listOfProjects;
+    // listOfProjects = widget.listOfProjects;
   }
 
   void setSelectedTab(String tabName) {
@@ -121,9 +121,9 @@ class _ProjectListingState extends State<ProjectListing> {
             children: [
               // filtering based on the tab name
               ...switch (selectedTab) {
-                'All Projects' => listOfProjects,
+                'All Projects' => widget.listOfProjects,
                 
-                _ => listOfProjects.where((project) => project.status == selectedTab),
+                _ => widget.listOfProjects.where((project) => project.status == selectedTab),
               }
                   .map<ProjectsListItem>(
                 (project) {
