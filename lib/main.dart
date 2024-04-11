@@ -16,13 +16,8 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // wrapping the entire app with ChangeNotifierProvider
     // single state - ProjectsList is required now, this is why ChangeNotifierProvider is used
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => ProjectsListProvider(),
-        ),
-        ChangeNotifierProvider(create: (context) => ManagersListProvider()),
-      ],
+    return ChangeNotifierProvider(
+      create: (context) => ProjectsListProvider(),
       child: MaterialApp(
         theme: AppThemes.lightTheme,
         darkTheme: AppThemes.darkTheme,

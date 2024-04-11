@@ -18,7 +18,6 @@ class CreateProjectThirdStep extends StatefulWidget {
 }
 
 class _CreateProjectThirdStepState extends State<CreateProjectThirdStep> {
-
   @override
   void initState() {
     super.initState();
@@ -28,26 +27,27 @@ class _CreateProjectThirdStepState extends State<CreateProjectThirdStep> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ManagersListProvider>(builder: (context, value, child) {
-      final managers = value.managers;
-
-      return DropdownButton(
-        icon: const Icon(
-          Icons.keyboard_arrow_down_outlined,
-        ),
-        isExpanded: true,
-        value: widget.selectedOptionFromDropdown,
-        onChanged: (managerName) {
-          widget.setSelectedOptionFromDropdown(managerName ?? managers[0].name);
-        },
-        items:
-            managers.map<DropdownMenuItem<String>>((Manager manager) {
-          return DropdownMenuItem(
-            value: manager.name,
-            child: Text(manager.name),
-          );
-        }).toList(),
-      );
-    });
+    return Consumer<ManagersListProvider>(
+      builder: (context, value, child) {
+        final managers = value.managers;
+        return DropdownButton(
+          icon: const Icon(
+            Icons.keyboard_arrow_down_outlined,
+          ),
+          isExpanded: true,
+          value: widget.selectedOptionFromDropdown,
+          onChanged: (managerName) {
+            widget
+                .setSelectedOptionFromDropdown(managerName ?? managers[0].name);
+          },
+          items: managers.map<DropdownMenuItem<String>>((Manager manager) {
+            return DropdownMenuItem(
+              value: manager.name,
+              child: Text(manager.name),
+            );
+          }).toList(),
+        );
+      },
+    );
   }
 }
