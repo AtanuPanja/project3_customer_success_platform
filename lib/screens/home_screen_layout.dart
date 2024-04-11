@@ -87,9 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      body: ProjectsScreen(
-        listOfProjects: listOfProjects,
-      ),
+      body: const ProjectsScreen(),
       drawer: Drawer(
         width: screenWidth - 50,
         elevation: 2,
