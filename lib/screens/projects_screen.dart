@@ -8,9 +8,7 @@ import '../widgets/project_listing.dart';
 class ProjectsScreen extends StatefulWidget {
   const ProjectsScreen({
     super.key,
-    required this.listOfProjects,
   });
-  final List<Map<String, String>> listOfProjects;
 
   @override
   State<ProjectsScreen> createState() => _ProjectsScreenState();

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'dart:developer' as developer;
+
 import '../data/list_of_projects.dart' as projects_data;
+import '../providers/create_project_provider.dart';
 import '../providers/managers_list_provider.dart';
 import '../utils/colors.dart';
 import '../widgets/create_project_first_step.dart';
@@ -40,100 +43,116 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
     });
   }
 
+  @override
+  void initState() {
+    super.initState();
+    final _ = Provider.of<CreateProjectProvider>(context, listen: false);
+  }
+
   // there are three steps
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => ManagersListProvider(),
-      child: Scaffold(
-        appBar: AppBar(),
-        body: Theme(
-          data: Theme.of(context).copyWith(
-            colorScheme: Theme.of(context).colorScheme.copyWith(
-                  primary: AppColors.primaryDarkBlue,
-                ),
-          ),
-          child: Stepper(
-            controlsBuilder: (context, details) {
-              return Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    padding: MaterialStateProperty.all(
-                      const EdgeInsets.symmetric(
-                          vertical: 8.0, horizontal: 32.0),
+      child: Consumer<CreateProjectProvider>(
+        builder: (context, value, child) {
+          value.setProjectName = projectNameController.text;
+          value.setManagerName = selectedOptionFromDropdown;
+          return Scaffold(
+            appBar: AppBar(),
+            body: Theme(
+              data: Theme.of(context).copyWith(
+                colorScheme: Theme.of(context).colorScheme.copyWith(
+                      primary: AppColors.primaryDarkBlue,
                     ),
+              ),
+              child: Stepper(
+                controlsBuilder: (context, details) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 8.0, horizontal: 16.0),
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        padding: MaterialStateProperty.all(
+                          const EdgeInsets.symmetric(
+                              vertical: 8.0, horizontal: 32.0),
+                        ),
+                      ),
+                      child:
+                          Text(currentStep == 1 ? 'Send invite' : 'Continue'),
+                      onPressed: () async{
+                        // since there are three steps, steps.length replaced with 3
+                          if (currentStep == 0) {
+                            // currentStep = 0, denotes the first form
+                            // here we validate the project name field.
+                            // calling the formKey.currentKey.validate() method, calls the validator as defined in the textformfield
+                            bool firstFormIsValid =
+                                _firstFormKey.currentState?.validate() ?? false;
+                            if (!firstFormIsValid) {
+                              return;
+                            }
+                            currentStep += 1;
+                          } else if (currentStep == 2) {
+                            projects_data
+                                .addNewProject(projectNameController.text);
+                            // widget.updateListOfProjects();
+                            developer.log((await value.postProjectData(context)).toString(), name: 'Post success');
+                            Navigator.of(context).pop();
+                          } else {
+                            currentStep += 1;
+                          }
+                        setState(() {
+                          
+                        });
+                      },
+                    ),
+                  );
+                },
+                stepIconBuilder: (stepIndex, stepState) {
+                  if (stepIndex <= currentStep) {
+                    return const Icon(
+                      Icons.check,
+                      size: 16,
+                      color: Colors.white,
+                    );
+                  } else {
+                    return Text(
+                      '${stepIndex + 1}',
+                      style: const TextStyle(
+                        color: Colors.white,
+                      ),
+                    );
+                  }
+                },
+                currentStep: currentStep,
+                steps: [
+                  Step(
+                    isActive: currentStep >= 0,
+                    title: const Text('Project Details'),
+                    content: CreateProjectFirstStep(
+                        firstFormKey: _firstFormKey,
+                        projectNameFocus: projectNameFocus,
+                        projectNameController: projectNameController),
                   ),
-                  child: Text(currentStep == 1 ? 'Send invite' : 'Continue'),
-                  onPressed: () {
-                    setState(() {
-                      // since there are three steps, steps.length replaced with 3
-                      if (currentStep == 0) {
-                        // currentStep = 0, denotes the first form
-                        // here we validate the project name field.
-                        // calling the formKey.currentKey.validate() method, calls the validator as defined in the textformfield
-                        bool firstFormIsValid =
-                            _firstFormKey.currentState?.validate() ?? false;
-                        if (!firstFormIsValid) {
-                          return;
-                        }
-                        currentStep += 1;
-                      } else if (currentStep == 2) {
-                        projects_data.addNewProject(projectNameController.text);
-                        widget.updateListOfProjects();
-                        Navigator.of(context).pop();
-                      } else {
-                        currentStep += 1;
-                      }
-                    });
-                  },
-                ),
-              );
-            },
-            stepIconBuilder: (stepIndex, stepState) {
-              if (stepIndex <= currentStep) {
-                return const Icon(
-                  Icons.check,
-                  size: 16,
-                  color: Colors.white,
-                );
-              } else {
-                return Text(
-                  '${stepIndex + 1}',
-                  style: const TextStyle(
-                    color: Colors.white,
+                  Step(
+                    isActive: currentStep >= 1,
+                    title: const Text('Invite client'),
+                    content: const CreateProjectSecondStep(),
                   ),
-                );
-              }
-            },
-            currentStep: currentStep,
-            steps: [
-              Step(
-                isActive: currentStep >= 0,
-                title: const Text('Project Details'),
-                content: CreateProjectFirstStep(
-                    firstFormKey: _firstFormKey,
-                    projectNameFocus: projectNameFocus,
-                    projectNameController: projectNameController),
+                  Step(
+                    isActive: currentStep >= 2,
+                    title: const Text('Select Project Manager'),
+                    content: CreateProjectThirdStep(
+                        selectedOptionFromDropdown: selectedOptionFromDropdown,
+                        setSelectedOptionFromDropdown:
+                            setSelectedOptionFromDropdown),
+                  ),
+                ],
               ),
-              Step(
-                isActive: currentStep >= 1,
-                title: const Text('Invite client'),
-                content: const CreateProjectSecondStep(),
-              ),
-              Step(
-                isActive: currentStep >= 2,
-                title: const Text('Select Project Manager'),
-                content: CreateProjectThirdStep(
-                    selectedOptionFromDropdown: selectedOptionFromDropdown,
-                    setSelectedOptionFromDropdown:
-                        setSelectedOptionFromDropdown),
-              ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }
