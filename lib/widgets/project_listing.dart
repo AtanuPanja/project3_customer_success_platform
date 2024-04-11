@@ -133,8 +133,8 @@ class _ProjectListingState extends State<ProjectListing> {
                     startDate: project.startDate,
                     status: project.status,
                     projectManager:
-                        project.projectManager,
-                    members: project.members,
+                        project.associatedManager.name,
+                    members: project.members.toString(),
                   );
                 },
               )
