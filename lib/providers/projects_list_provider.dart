@@ -17,6 +17,7 @@ class ProjectsListProvider extends ChangeNotifier {
   // notify the listeners for the change in the data, to update the UI
   // provider pattern for state management
   void getProjectsData() async {
+    List<Project> listOfProjects = [];
     Map<String, dynamic> data = await ApiService.getHTTP(ApiEndpoints.getAllProjects);
 
     // this has been done because, 'data' property contains the array of the projects
@@ -32,7 +33,7 @@ class ProjectsListProvider extends ChangeNotifier {
     // projects = data['data'];
     
     // developer.log(data.toString(), name: 'ProjectsListProvider - data');
-    // developer.log(data['data'].toString(), name: 'ProjectsListProvider - data[data]');
+    developer.log(data['data'].toString(), name: 'ProjectsListProvider - data[data]');
     // developer.log(data['data'].toString(), name: 'ProjectsListProvider - data[data]');
     // developer.log(data['data'][0].toString(), name: 'ProjectsListProvider - data[data][0]');
     for (Map<String,dynamic> project in data['data']) {
@@ -48,12 +49,13 @@ class ProjectsListProvider extends ChangeNotifier {
           };
         }
         project['members'] = (Random().nextInt(99) + 1);
-        projects.add(Project.fromJson(project));
+        listOfProjects.add(Project.fromJson(project));
       } catch (e) {
         developer.log(project.toString(), name: 'ProviderProjectsList Error');
         developer.log(e.toString(), name: 'Error description');
       }
     }
+    projects = listOfProjects;
     developer.log(projects.toString(), name: 'ProjectsListProvider - projects');
     
     notifyListeners();
