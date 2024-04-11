@@ -13,4 +13,7 @@ class ApiEndpoints {
   static const String getManagerAssignedProjects =
       "/projects?role=${ApiRoleConstants.manager}&id=${ApiRoleConstants.managerID}";
   static const String getClientProjects = "/projects?role=${ApiRoleConstants.client}&id=${ApiRoleConstants.clientID}";
+
+  static const String postProject = "/addProject";
+
 }
