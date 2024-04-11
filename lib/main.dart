@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project3_customer_success_platform/providers/managers_list_provider.dart';
 import 'package:project3_customer_success_platform/providers/projects_list_provider.dart';
 import 'package:provider/provider.dart';
 import 'screens/home_screen_layout.dart';
@@ -15,8 +16,13 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // wrapping the entire app with ChangeNotifierProvider
     // single state - ProjectsList is required now, this is why ChangeNotifierProvider is used
-    return ChangeNotifierProvider(
-      create: (context) => ProjectsListProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => ProjectsListProvider(),
+        ),
+        ChangeNotifierProvider(create: (context) => ManagersListProvider()),
+      ],
       child: MaterialApp(
         theme: AppThemes.lightTheme,
         darkTheme: AppThemes.darkTheme,

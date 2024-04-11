@@ -14,7 +14,7 @@ class ApiService {
   );
   
   // get data from api, and return as Map type of data, which is the response format in the api
-  static Future<Map<String,dynamic>> getHTTP(String path) async {
+  static Future<dynamic> getHTTP(String path) async {
     try {
       Response response = await _dio.get(path);
       // developer.log(response.data.toString());

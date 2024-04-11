@@ -29,7 +29,7 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
   int currentStep = 0;
 
   // this state variable is used to track the selected option from the dropdown menu
-  String selectedOptionFromDropdown = 'Project Manager One';
+  String selectedOptionFromDropdown = 'Manager 3';
 
   // sets the selected option from dropdown, to handle the onchange event
   void setSelectedOptionFromDropdown(String selected) {
@@ -37,14 +37,6 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
       selectedOptionFromDropdown = selected;
     });
   }
-
-  // list to populate the dropdown for selection
-  List<String> listOfProjectManagers = [
-    'Project Manager One',
-    'Project Manager Two',
-    'Project Manager Three',
-    'Project Manager Four'
-  ];
 
   // there are three steps
 
