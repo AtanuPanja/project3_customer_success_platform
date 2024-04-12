@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project3_customer_success_platform/model/project.dart';
 
 import 'package:project3_customer_success_platform/screens/project_detail_screen.dart';
 import 'package:project3_customer_success_platform/utils/constants/project_statuses.dart';
@@ -9,18 +10,10 @@ class ProjectsListItem extends StatelessWidget {
   const ProjectsListItem({
     super.key,
     required this.allProjectsIsActive,
-    required this.name,
-    required this.startDate,
-    required this.status,
-    required this.projectManager,
-    required this.members,
+    required this.project,
   });
   final bool allProjectsIsActive;
-  final String name;
-  final String startDate;
-  final String status;
-  final String projectManager;
-  final String members;
+  final Project project;
 
   @override
   Widget build(BuildContext context) {
@@ -34,8 +27,7 @@ class ProjectsListItem extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) => ProjectDetailsScreen(
-                projectName: name,
-                members: members,
+                project: project,
               ),
             ),
           );
@@ -51,7 +43,7 @@ class ProjectsListItem extends StatelessWidget {
                     borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(8.0),
                     ),
-                    color: switch (status) {
+                    color: switch (project.status) {
                       ProjectStatuses.onGoing =>
                         AppColors.ongoingProjectColor,
                       ProjectStatuses.completed => AppColors.closedProjectColor,
@@ -60,7 +52,7 @@ class ProjectsListItem extends StatelessWidget {
                     },
                   ),
                   child: Text(
-                    status,
+                    project.status,
                     style: const TextStyle(
                       color: Colors.white,
                     ),
@@ -75,15 +67,15 @@ class ProjectsListItem extends StatelessWidget {
                   ? AppColors.listTileDarkColor
                   : AppColors.listTileColor,
               leading: const Icon(Icons.article_outlined),
-              title: Text(name),
+              title: Text(project.name),
               subtitle: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(startDate),
+                    Text(project.startDate),
                     Text(
-                      "Project Manager: $projectManager",
+                      "Project Manager: ${project.associatedManager.name}",
                       style: const TextStyle(
                         fontWeight: FontWeight.w600,
                       ),
@@ -98,10 +90,10 @@ class ProjectsListItem extends StatelessWidget {
                       margin: const EdgeInsets.only(top: 8.0),
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        switch (members) {
-                          '0' => 'No members',
-                          '1' => '1 member',
-                          _ => "$members members",
+                        switch (project.members) {
+                          0 => 'No members',
+                          1 => '1 member',
+                          _ => "${project.members} members",
                         },
                       ),
                     ),

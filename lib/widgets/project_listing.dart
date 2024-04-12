@@ -129,12 +129,7 @@ class _ProjectListingState extends State<ProjectListing> {
                 (project) {
                   return ProjectsListItem(
                     allProjectsIsActive: selectedTab == 'All Projects',
-                    name: project.name,
-                    startDate: project.startDate,
-                    status: project.status,
-                    projectManager:
-                        project.associatedManager.name,
-                    members: project.members.toString(),
+                    project: project,
                   );
                 },
               )
