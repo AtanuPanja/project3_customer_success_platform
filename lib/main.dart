@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project3_customer_success_platform/providers/create_project_provider.dart';
 import 'package:project3_customer_success_platform/providers/projects_list_provider.dart';
+import 'package:project3_customer_success_platform/providers/update_project_provider.dart';
 import 'package:provider/provider.dart';
 import 'screens/home_screen_layout.dart';
 import 'utils/themes.dart';
@@ -23,6 +24,9 @@ class MainApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => CreateProjectProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => UpdateProjectProvider(),
         ),
       ],
       child: MaterialApp(
