@@ -56,7 +56,9 @@ class CreateProjectProvider extends ChangeNotifier {
      */
     bool postSuccess = await ApiService.postHTTP(ApiEndpoints.postProject, data);
     notifyListeners();
-    Provider.of<ProjectsListProvider>(context, listen: false).getProjectsData();
+    if (context.mounted) {
+      Provider.of<ProjectsListProvider>(context, listen: false).getProjectsData();
+    }
     return postSuccess;
   }
 

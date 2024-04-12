@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'dart:developer' as developer;
+
 import 'package:project3_customer_success_platform/model/manager.dart';
 import 'package:project3_customer_success_platform/providers/managers_list_provider.dart';
 import 'package:provider/provider.dart';
@@ -18,6 +20,15 @@ class CreateProjectThirdStep extends StatefulWidget {
 }
 
 class _CreateProjectThirdStepState extends State<CreateProjectThirdStep> {
+
+  // this state variable is used to track the selected option from the dropdown menu
+  String selectedManager = 'Manager 3';
+  void setSelectedManager(String manager) {
+    setState(() {
+      selectedManager = manager;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -30,13 +41,15 @@ class _CreateProjectThirdStepState extends State<CreateProjectThirdStep> {
     return Consumer<ManagersListProvider>(
       builder: (context, value, child) {
         final managers = value.managers;
+        developer.log(managers.toString(), name: 'Create project third step');
         return DropdownButton(
+          value: selectedManager,
           icon: const Icon(
             Icons.keyboard_arrow_down_outlined,
           ),
           isExpanded: true,
-          value: widget.selectedOptionFromDropdown,
           onChanged: (managerName) {
+            setSelectedManager(managerName ?? managers[0].name);
             widget
                 .setSelectedOptionFromDropdown(managerName ?? managers[0].name);
           },

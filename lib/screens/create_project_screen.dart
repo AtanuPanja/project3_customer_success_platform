@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'dart:developer' as developer;
-
-import '../data/list_of_projects.dart' as projects_data;
 import '../providers/create_project_provider.dart';
 import '../providers/managers_list_provider.dart';
 import '../utils/colors.dart';
@@ -34,6 +32,8 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
   int currentStep = 0;
 
   // this state variable is used to track the selected option from the dropdown menu
+  // earlier this data was passed to the next screen, to show the dropdown
+  // but now this is not passed and the selectedManager is now a separate state in the CreateProjectThirdStep widget
   String selectedOptionFromDropdown = 'Manager 3';
 
   // sets the selected option from dropdown, to handle the onchange event
@@ -94,11 +94,13 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
                             }
                             currentStep += 1;
                           } else if (currentStep == 2) {
-                            projects_data
-                                .addNewProject(projectNameController.text);
+                            // projects_data
+                            //     .addNewProject(projectNameController.text);
                             // widget.updateListOfProjects();
                             developer.log((await value.postProjectData(context)).toString(), name: 'Post success');
-                            Navigator.of(context).pop();
+                            if (context.mounted) {
+                              Navigator.of(context).pop();
+                            }
                           } else {
                             currentStep += 1;
                           }

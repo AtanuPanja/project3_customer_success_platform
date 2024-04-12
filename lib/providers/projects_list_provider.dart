@@ -18,14 +18,17 @@ class ProjectsListProvider extends ChangeNotifier {
   // provider pattern for state management
   void getProjectsData() async {
     List<Project> listOfProjects = [];
-    Map<String, dynamic> data = await ApiService.getHTTP(ApiEndpoints.getAllProjects);
+    Map<dynamic, dynamic> data = await ApiService.getHTTP(ApiEndpoints.getAllProjects);
 
     // this has been done because, 'data' property contains the array of the projects
     // and if the 'data' property is not present, it will throw errors
     // also, this is not handled during the api call in the getHTTP method, because
     // for the listofprojects api, we have a response with a property 'data'
     // however, for other apis, it may not be the same. 
-    if (data == {}) {
+    if (data['data'] == null) {
+      // data == {} was unsuccessful in checking for empty map object
+      // so replaced it with data['data'] == null
+
       data = {
         'data': [],
       };
