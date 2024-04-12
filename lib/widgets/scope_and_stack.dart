@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:developer' as developer;
 
 class ScopeAndStack extends StatefulWidget {
   const ScopeAndStack({
@@ -19,7 +20,7 @@ class ScopeAndStack extends StatefulWidget {
 }
 
 class _ScopeAndStackState extends State<ScopeAndStack> {
-  String selectedOptionFromDropdown = 'Backend';
+  String selectedOptionFromDropdown = '';
   List<String> listOfTechnologies = [
     'Backend',
     'Frontend',
@@ -30,8 +31,8 @@ class _ScopeAndStackState extends State<ScopeAndStack> {
   @override
   void initState() {
     super.initState();
+    developer.log(widget.stack ?? 'no stack', name: 'widget.stack - Scope and stack');
     selectedOptionFromDropdown = widget.stack ?? '';
-    selectedOptionFromDropdown = selectedOptionFromDropdown == '' ? 'Backend': selectedOptionFromDropdown;
   }
 
   @override

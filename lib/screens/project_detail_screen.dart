@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'dart:developer' as developer;
+
 import 'package:project3_customer_success_platform/model/project.dart';
+import 'package:project3_customer_success_platform/providers/update_project_provider.dart';
+import 'package:provider/provider.dart';
 import '../utils/colors.dart';
 
 import '../widgets/project_overview.dart';
@@ -19,9 +23,9 @@ class ProjectDetailsScreen extends StatefulWidget {
 }
 
 class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
-  TextEditingController overviewController = TextEditingController();
-  TextEditingController budgetValueController = TextEditingController();
-  TextEditingController scopeController = TextEditingController();
+  TextEditingController overviewController = TextEditingController(); // overview text
+  TextEditingController budgetValueController = TextEditingController(); // budget text (leaving the budget type)
+  TextEditingController scopeController = TextEditingController(); // scope text
 
   Map<String, String> selectedStack = {
     'label': 'Backend',
@@ -44,11 +48,8 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
       'Infrastructure and Services' => 'infrastructure_and_services',
       _ => ''
     };
-
-    selectedStack = {
-      'label': stack,
-      'value': value,
-    };
+    selectedStack['label'] = stack;
+    selectedStack['value'] = value;
 
     setState(() {});
   }
@@ -63,341 +64,376 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
     var currentOrientation = MediaQuery.of(context).orientation;
-    return Scaffold(
-      appBar: AppBar(),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Breadcrumbs: This Row widget creates the breadcrumbs display
-              // Clicking on the Projects, we can again navigate back to the projects page
-              Row(
-                children: [
-                  InkWell(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: const Row(
+    return Consumer<UpdateProjectProvider>(
+      builder: (context, updateProjectProvider, child) {
+        updateProjectProvider.setId = widget.project.id;
+        developer.log((updateProjectProvider.stack['label'] ?? widget.project.stack?.label).toString(), name: 'stack passed to scope and stack - ProjectDetailScreen');
+        return Scaffold(
+        appBar: AppBar(),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Breadcrumbs: This Row widget creates the breadcrumbs display
+                // Clicking on the Projects, we can again navigate back to the projects page
+                Row(
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: const Row(
+                        children: [
+                          Icon(
+                            Icons.card_travel_rounded,
+                            size: 12,
+                          ),
+                          SizedBox(
+                            width: 2,
+                          ),
+                          Text(
+                            'Projects',
+                            style: TextStyle(
+                              fontSize: 12,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 2,
+                          ),
+                          Icon(
+                            Icons.arrow_forward_ios,
+                            size: 12,
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 2,
+                    ),
+                    Row(
                       children: [
-                        Icon(
-                          Icons.card_travel_rounded,
+                        const Icon(
+                          Icons.business_center_outlined,
                           size: 12,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 2,
                         ),
                         Text(
-                          'Projects',
-                          style: TextStyle(
+                          widget.project.name,
+                          style: const TextStyle(
                             fontSize: 12,
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 2,
                         ),
-                        Icon(
+                        const Icon(
                           Icons.arrow_forward_ios,
                           size: 12,
                         ),
                       ],
                     ),
-                  ),
-                  const SizedBox(
-                    width: 2,
-                  ),
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.business_center_outlined,
-                        size: 12,
-                      ),
-                      const SizedBox(
-                        width: 2,
-                      ),
-                      Text(
-                        widget.project.name,
-                        style: const TextStyle(
-                          fontSize: 12,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 2,
-                      ),
-                      const Icon(
-                        Icons.arrow_forward_ios,
-                        size: 12,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              // breadcrumbs widget ends here
-              const SizedBox(
-                height: 10,
-              ),
-              // showing project name with the number of project members
-              // 0 members: No members
-              // 1 member: 1 profile is shown
-              // 2 members: 2 profiles are shown
-              // 3 members: 3 profiles are shown
-              // > 3 members: 3 profiles, alongwith a plus and total members - 3
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    widget.project.name,
-                    style: const TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      if (currentOrientation == Orientation.landscape &&
-                          widget.project.members != 0)
-                        const Text('Members'),
-                      switch (widget.project.members) {
-                        0 => const Text('No members'),
-                        1 => Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: InkWell(
-                              child: Image.asset(
-                                  'assets/images/default_profile_32px.png'),
-                              onTap: () {},
-                            ),
-                          ),
-                        2 => Container(
-                            width: screenWidth / 3,
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 8.0,
-                            ),
-                            child: Stack(
-                              children: [
-                                Positioned(
-                                  left: 20.0,
-                                  child: InkWell(
-                                    child: Image.asset(
-                                        'assets/images/default_profile_32px.png'),
-                                    onTap: () {},
-                                  ),
-                                ),
-                                Positioned(
-                                  child: InkWell(
-                                    child: Image.asset(
-                                        'assets/images/default_profile_32px.png'),
-                                    onTap: () {},
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        3 => Container(
-                            width: screenWidth / 3,
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 8.0,
-                            ),
-                            child: Stack(
-                              children: [
-                                Positioned(
-                                  left: 50,
-                                  child: InkWell(
-                                    child: Image.asset(
-                                        'assets/images/default_profile_32px.png'),
-                                    onTap: () {},
-                                  ),
-                                ),
-                                Positioned(
-                                  left: 25.0,
-                                  child: InkWell(
-                                    child: Image.asset(
-                                        'assets/images/default_profile_32px.png'),
-                                    onTap: () {},
-                                  ),
-                                ),
-                                Positioned(
-                                  child: InkWell(
-                                    child: Image.asset(
-                                        'assets/images/default_profile_32px.png'),
-                                    onTap: () {},
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        _ => Container(
-                            width: screenWidth / 3,
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 8.0,
-                            ),
-                            child: Stack(
-                              children: [
-                                Positioned(
-                                  left: 40,
-                                  child: Container(
-                                    padding: const EdgeInsets.only(
-                                      left: 35.0,
-                                      right: 5.0,
-                                      top: 6.0,
-                                      bottom: 6.0,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: Colors.blueGrey.shade200,
-                                      borderRadius: BorderRadius.circular(16.0),
-                                    ),
-                                    child: Text(
-                                      '+ ${widget.project.members - 3}',
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.w700),
-                                    ),
-                                  ),
-                                ),
-                                Positioned(
-                                  left: 40,
-                                  child: InkWell(
-                                    child: Image.asset(
-                                        'assets/images/default_profile_32px.png'),
-                                    onTap: () {},
-                                  ),
-                                ),
-                                Positioned(
-                                  left: 20.0,
-                                  child: InkWell(
-                                    child: Image.asset(
-                                        'assets/images/default_profile_32px.png'),
-                                    onTap: () {},
-                                  ),
-                                ),
-                                Positioned(
-                                  child: InkWell(
-                                    child: Image.asset(
-                                        'assets/images/default_profile_32px.png'),
-                                    onTap: () {},
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                      },
-                    ],
-                  ),
-                ],
-              ),
-              // the project name with the profiles widget ends here
-              ElevatedButton(
-                style: ButtonStyle(
-                  maximumSize: MaterialStateProperty.all(
-                    Size(
-                      screenWidth / 2,
-                      50,
-                    ),
-                  ),
-                  backgroundColor: MaterialStateProperty.all(
-                      Theme.of(context).scaffoldBackgroundColor),
-                  foregroundColor:
-                      MaterialStateProperty.all(AppColors.dividerColor),
-                  elevation: MaterialStateProperty.all(0.0),
-                  side: MaterialStateProperty.all(
-                    BorderSide(
-                      color: AppColors.dividerColor,
-                    ),
-                  ),
-                ),
-                onPressed: () {},
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Icon(Icons.person),
-                    Text('Invite Members'),
                   ],
                 ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                      color: Colors.grey.shade500,
-                    ),
-                  ),
+                // breadcrumbs widget ends here
+                const SizedBox(
+                  height: 10,
                 ),
-                child: Row(
+                // showing project name with the number of project members
+                // 0 members: No members
+                // 1 member: 1 profile is shown
+                // 2 members: 2 profiles are shown
+                // 3 members: 3 profiles are shown
+                // > 3 members: 3 profiles, alongwith a plus and total members - 3
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: tabs.map<Widget>(
-                    (tabName) {
-                      return InkWell(
-                        onTap: () => setCurrentTab(tabName),
-                        child: Container(
-                          width: 100,
-                          decoration: BoxDecoration(
-                            border: Border(
-                              bottom: BorderSide(
-                                color: currentTab == tabName
-                                    ? const Color.fromARGB(255, 0, 115, 234)
-                                    : Colors.transparent,
-                                width: 2,
+                  children: [
+                    Text(
+                      widget.project.name,
+                      style: const TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        if (currentOrientation == Orientation.landscape &&
+                            widget.project.members != 0)
+                          const Text('Members'),
+                        switch (widget.project.members) {
+                          0 => const Text('No members'),
+                          1 => Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: InkWell(
+                                child: Image.asset(
+                                    'assets/images/default_profile_32px.png'),
+                                onTap: () {},
                               ),
                             ),
-                          ),
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(tabName),
-                        ),
-                      );
-                    },
-                  ).toList(),
-                ),
-              ),
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
-                child: Column(
-                  children: [
-                    switch (currentTab) {
-                      'Project Overview' => ProjectOverview(
-                          overview: widget.project.overview,
-                          overviewController: overviewController,
-                          budgetValue: widget.project.budget?.typeValue,
-                          budgetValueController: budgetValueController,
-                        ),
-                      'Scope & stack' => ScopeAndStack(
-                          scope: widget.project.scope,
-                          scopeController: scopeController,
-                          stack: widget.project.stack?.label,
-                          setSelectedStack: setSelectedStack,
-                        ),
-                      'Escalation matrix' => const EscalationMatrix(),
-                      _ => Text(currentTab),
-                    },
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        switch (currentTab) {
-                          case 'Project Overview':
-                            setCurrentTab('Scope & stack');
-                          case 'Scope & stack':
-                            setCurrentTab('Escalation matrix');
-                          default:
-                            return;
-                        }
-                      },
-                      style: ButtonStyle(
-                        minimumSize: MaterialStateProperty.all(
-                          Size(screenWidth, 50),
-                        ),
-                      ),
-                      child: const Text('Continue'),
+                          2 => Container(
+                              width: screenWidth / 3,
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8.0,
+                              ),
+                              child: Stack(
+                                children: [
+                                  Positioned(
+                                    left: 20.0,
+                                    child: InkWell(
+                                      child: Image.asset(
+                                          'assets/images/default_profile_32px.png'),
+                                      onTap: () {},
+                                    ),
+                                  ),
+                                  Positioned(
+                                    child: InkWell(
+                                      child: Image.asset(
+                                          'assets/images/default_profile_32px.png'),
+                                      onTap: () {},
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          3 => Container(
+                              width: screenWidth / 3,
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8.0,
+                              ),
+                              child: Stack(
+                                children: [
+                                  Positioned(
+                                    left: 50,
+                                    child: InkWell(
+                                      child: Image.asset(
+                                          'assets/images/default_profile_32px.png'),
+                                      onTap: () {},
+                                    ),
+                                  ),
+                                  Positioned(
+                                    left: 25.0,
+                                    child: InkWell(
+                                      child: Image.asset(
+                                          'assets/images/default_profile_32px.png'),
+                                      onTap: () {},
+                                    ),
+                                  ),
+                                  Positioned(
+                                    child: InkWell(
+                                      child: Image.asset(
+                                          'assets/images/default_profile_32px.png'),
+                                      onTap: () {},
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          _ => Container(
+                              width: screenWidth / 3,
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8.0,
+                              ),
+                              child: Stack(
+                                children: [
+                                  Positioned(
+                                    left: 40,
+                                    child: Container(
+                                      padding: const EdgeInsets.only(
+                                        left: 35.0,
+                                        right: 5.0,
+                                        top: 6.0,
+                                        bottom: 6.0,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: Colors.blueGrey.shade200,
+                                        borderRadius: BorderRadius.circular(16.0),
+                                      ),
+                                      child: Text(
+                                        '+ ${widget.project.members - 3}',
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.w700),
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    left: 40,
+                                    child: InkWell(
+                                      child: Image.asset(
+                                          'assets/images/default_profile_32px.png'),
+                                      onTap: () {},
+                                    ),
+                                  ),
+                                  Positioned(
+                                    left: 20.0,
+                                    child: InkWell(
+                                      child: Image.asset(
+                                          'assets/images/default_profile_32px.png'),
+                                      onTap: () {},
+                                    ),
+                                  ),
+                                  Positioned(
+                                    child: InkWell(
+                                      child: Image.asset(
+                                          'assets/images/default_profile_32px.png'),
+                                      onTap: () {},
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                        },
+                      ],
                     ),
                   ],
                 ),
-              ),
-            ],
+                // the project name with the profiles widget ends here
+                ElevatedButton(
+                  style: ButtonStyle(
+                    maximumSize: MaterialStateProperty.all(
+                      Size(
+                        screenWidth / 2,
+                        50,
+                      ),
+                    ),
+                    backgroundColor: MaterialStateProperty.all(
+                        Theme.of(context).scaffoldBackgroundColor),
+                    foregroundColor:
+                        MaterialStateProperty.all(AppColors.dividerColor),
+                    elevation: MaterialStateProperty.all(0.0),
+                    side: MaterialStateProperty.all(
+                      BorderSide(
+                        color: AppColors.dividerColor,
+                      ),
+                    ),
+                  ),
+                  onPressed: () {},
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(Icons.person),
+                      Text('Invite Members'),
+                    ],
+                  ),
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                        color: Colors.grey.shade500,
+                      ),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: tabs.map<Widget>(
+                      (tabName) {
+                        return InkWell(
+                          onTap: ()  {
+                            switch (currentTab) {
+                            case 'Project Overview':
+                              updateProjectProvider.setScope = scopeController.text;
+                              updateProjectProvider.setStack = selectedStack;
+                            case 'Scope & stack':
+                              updateProjectProvider.setOverview = overviewController.text;
+                              updateProjectProvider.setBudgetValue = budgetValueController.text;
+                            case 'Escalation matrix':
+                              updateProjectProvider.setOverview = overviewController.text;
+                              updateProjectProvider.setBudgetValue = budgetValueController.text;
+                              updateProjectProvider.setScope = scopeController.text;
+                              updateProjectProvider.setStack = selectedStack;
+                            default:
+                              return;
+                          }
+                            setCurrentTab(tabName);
+                          },
+                          child: Container(
+                            width: 100,
+                            decoration: BoxDecoration(
+                              border: Border(
+                                bottom: BorderSide(
+                                  color: currentTab == tabName
+                                      ? const Color.fromARGB(255, 0, 115, 234)
+                                      : Colors.transparent,
+                                  width: 2,
+                                ),
+                              ),
+                            ),
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(tabName),
+                          ),
+                        );
+                      },
+                    ).toList(),
+                  ),
+                ),
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
+                  child: Column(
+                    children: [
+                      switch (currentTab) {
+                        'Project Overview' => ProjectOverview(
+                            overview: updateProjectProvider.overview.isEmpty ? widget.project.overview: updateProjectProvider.overview,
+                            overviewController: overviewController,
+                            budgetValue: updateProjectProvider.budgetValue.isEmpty ? widget.project.budget?.typeValue: updateProjectProvider.budgetValue,
+                            budgetValueController: budgetValueController,
+                          ),
+                        'Scope & stack' => ScopeAndStack(
+                            scope: updateProjectProvider.scope.isEmpty ? widget.project.scope: updateProjectProvider.scope,
+                            scopeController: scopeController,
+                            stack: updateProjectProvider.stack['label'],
+                            setSelectedStack: setSelectedStack,
+                          ),
+                        'Escalation matrix' => const EscalationMatrix(),
+                        _ => Text(currentTab),
+                      },
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          switch (currentTab) {
+                            case 'Project Overview':
+                              updateProjectProvider.setOverview = overviewController.text;
+                              updateProjectProvider.setBudgetValue = budgetValueController.text;
+                              setCurrentTab('Scope & stack');
+                            case 'Scope & stack':
+                              updateProjectProvider.setScope = scopeController.text;
+                              updateProjectProvider.setStack = selectedStack;
+                              setCurrentTab('Escalation matrix');
+                            case 'Escalation matrix':
+                              updateProjectProvider.setOverview = overviewController.text;
+                              updateProjectProvider.setBudgetValue = budgetValueController.text;
+                              updateProjectProvider.setScope = scopeController.text;
+                              updateProjectProvider.setStack = selectedStack;
+                              updateProjectProvider.updateProjectData(context);
+                              Navigator.of(context).pop();
+                            default:
+                              return;
+                          }
+                        },
+                        style: ButtonStyle(
+                          minimumSize: MaterialStateProperty.all(
+                            Size(screenWidth, 50),
+                          ),
+                        ),
+                        child: const Text('Continue'),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
-      ),
+      );
+      },
+      
     );
   }
 }
