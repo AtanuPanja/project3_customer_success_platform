@@ -2,8 +2,17 @@ import 'package:flutter/material.dart';
 
 class ScopeAndStack extends StatefulWidget {
   const ScopeAndStack({
-    super.key,
+    super.key, 
+    required this.scope, 
+    required this.scopeController, 
+    required this.stack,
+    required this.setSelectedStack, 
   });
+
+  final String? scope;
+  final TextEditingController scopeController;
+  final String? stack;
+  final Function(String) setSelectedStack;
 
   @override
   State<ScopeAndStack> createState() => _ScopeAndStackState();
@@ -13,13 +22,21 @@ class _ScopeAndStackState extends State<ScopeAndStack> {
   String selectedOptionFromDropdown = 'Backend';
   List<String> listOfTechnologies = [
     'Backend',
-    'Front-end',
-    'Mobile app',
+    'Frontend',
     'Database',
+    'Mobile-App'
   ];
 
   @override
+  void initState() {
+    super.initState();
+    selectedOptionFromDropdown = widget.stack ?? '';
+    selectedOptionFromDropdown = selectedOptionFromDropdown == '' ? 'Backend': selectedOptionFromDropdown;
+  }
+
+  @override
   Widget build(BuildContext context) {
+      widget.scopeController.text = widget.scope ?? '';
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -32,7 +49,8 @@ class _ScopeAndStackState extends State<ScopeAndStack> {
           value: selectedOptionFromDropdown,
           onChanged: (value) {
             setState(() {
-              selectedOptionFromDropdown = value ?? 'Project Manager One';
+              selectedOptionFromDropdown = value ?? 'Backend';
+              widget.setSelectedStack(selectedOptionFromDropdown);
             });
           },
           items:
@@ -48,6 +66,7 @@ class _ScopeAndStackState extends State<ScopeAndStack> {
         ),
         const Text('Project Scope'),
         TextFormField(
+          controller: widget.scopeController,
           maxLines: 3,
           decoration: InputDecoration(
             border: OutlineInputBorder(

@@ -2,11 +2,24 @@ import 'package:flutter/material.dart';
 
 class ProjectOverview extends StatelessWidget {
   const ProjectOverview({
-    super.key,
+    super.key, 
+    required this.overview, 
+    required this.overviewController,
+    required this.budgetValue, 
+    required this.budgetValueController,
   });
+
+  final String? overview;
+  final TextEditingController overviewController;
+  final String? budgetValue;
+  final TextEditingController budgetValueController;
 
   @override
   Widget build(BuildContext context) {
+
+    overviewController.text = overview ?? '';
+    budgetValueController.text = budgetValue ?? '';
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -15,6 +28,7 @@ class ProjectOverview extends StatelessWidget {
           height: 5,
         ),
         TextFormField(
+          controller: overviewController,
           maxLines: 5,
           decoration: InputDecoration(
             border: OutlineInputBorder(
@@ -105,6 +119,7 @@ class ProjectOverview extends StatelessWidget {
         Row(
           children: [
             TextFormField(
+              controller: budgetValueController,
               decoration: InputDecoration(
                 constraints: const BoxConstraints(
                   maxWidth: 100,

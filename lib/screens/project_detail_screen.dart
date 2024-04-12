@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project3_customer_success_platform/model/project.dart';
 import '../utils/colors.dart';
 
 import '../widgets/project_overview.dart';
@@ -8,24 +9,49 @@ import '../widgets/escalation_matrix.dart';
 class ProjectDetailsScreen extends StatefulWidget {
   const ProjectDetailsScreen({
     super.key,
-    required this.projectName,
-    required this.members,
+    required this.project,
   });
 
-  final String projectName;
-  final String members;
+  final Project project;
 
   @override
   State<ProjectDetailsScreen> createState() => _ProjectDetailsScreenState();
 }
 
 class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
+  TextEditingController overviewController = TextEditingController();
+  TextEditingController budgetValueController = TextEditingController();
+  TextEditingController scopeController = TextEditingController();
+
+  Map<String, String> selectedStack = {
+    'label': 'Backend',
+    'value': 'backend',
+  };
+
   String currentTab = 'Project Overview';
   List<String> tabs = [
     'Project Overview',
     'Scope & stack',
     'Escalation matrix',
   ];
+
+  void setSelectedStack(String stack) {
+    var value = switch (stack) {
+      'Frontend' => 'frontend',
+      'Backend' => 'backend',
+      'Mobile-App' => 'mobile_app',
+      'Database' => 'database',
+      'Infrastructure and Services' => 'infrastructure_and_services',
+      _ => ''
+    };
+
+    selectedStack = {
+      'label': stack,
+      'value': value,
+    };
+
+    setState(() {});
+  }
 
   void setCurrentTab(String tabName) {
     setState(() {
@@ -91,7 +117,7 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
                         width: 2,
                       ),
                       Text(
-                        widget.projectName,
+                        widget.project.name,
                         style: const TextStyle(
                           fontSize: 12,
                         ),
@@ -121,7 +147,7 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    widget.projectName,
+                    widget.project.name,
                     style: const TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.w600,
@@ -131,11 +157,11 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       if (currentOrientation == Orientation.landscape &&
-                          widget.members != '0')
+                          widget.project.members != 0)
                         const Text('Members'),
-                      switch (widget.members) {
-                        '0' => const Text('No members'),
-                        '1' => Padding(
+                      switch (widget.project.members) {
+                        0 => const Text('No members'),
+                        1 => Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: InkWell(
                               child: Image.asset(
@@ -143,7 +169,7 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
                               onTap: () {},
                             ),
                           ),
-                        '2' => Container(
+                        2 => Container(
                             width: screenWidth / 3,
                             padding: const EdgeInsets.symmetric(
                               horizontal: 8.0,
@@ -168,7 +194,7 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
                               ],
                             ),
                           ),
-                        '3' => Container(
+                        3 => Container(
                             width: screenWidth / 3,
                             padding: const EdgeInsets.symmetric(
                               horizontal: 8.0,
@@ -222,7 +248,7 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
                                       borderRadius: BorderRadius.circular(16.0),
                                     ),
                                     child: Text(
-                                      '+ ${int.parse(widget.members) - 3}',
+                                      '+ ${widget.project.members - 3}',
                                       style: const TextStyle(
                                           fontWeight: FontWeight.w700),
                                     ),
@@ -329,8 +355,18 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
                 child: Column(
                   children: [
                     switch (currentTab) {
-                      'Project Overview' => const ProjectOverview(),
-                      'Scope & stack' => const ScopeAndStack(),
+                      'Project Overview' => ProjectOverview(
+                          overview: widget.project.overview,
+                          overviewController: overviewController,
+                          budgetValue: widget.project.budget?.typeValue,
+                          budgetValueController: budgetValueController,
+                        ),
+                      'Scope & stack' => ScopeAndStack(
+                          scope: widget.project.scope,
+                          scopeController: scopeController,
+                          stack: widget.project.stack?.label,
+                          setSelectedStack: setSelectedStack,
+                        ),
                       'Escalation matrix' => const EscalationMatrix(),
                       _ => Text(currentTab),
                     },
