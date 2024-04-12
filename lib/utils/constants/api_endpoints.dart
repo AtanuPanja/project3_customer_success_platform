@@ -22,4 +22,6 @@ class ApiEndpoints {
 
   static const String postProject = "/addProject";
 
+  static const String updateProject = '/project/:id/project_details';
+
 }
