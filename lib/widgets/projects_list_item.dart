@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
-import 'package:project3_customer_success_platform/model/project.dart';
+import '../model/project.dart';
 
-import 'package:project3_customer_success_platform/screens/project_detail_screen.dart';
-import 'package:project3_customer_success_platform/utils/constants/project_statuses.dart';
-
+import '../utils/constants/project_statuses.dart';
 import '../utils/colors.dart';
+
+import '../screens/project_detail_screen.dart';
+
 
 class ProjectsListItem extends StatelessWidget {
   const ProjectsListItem({

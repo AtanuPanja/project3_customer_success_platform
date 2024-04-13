@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'dart:developer' as developer;
 
-import 'package:project3_customer_success_platform/model/manager.dart';
-import 'package:project3_customer_success_platform/providers/managers_list_provider.dart';
-import 'package:provider/provider.dart';
+import '../model/manager.dart';
+import '../providers/managers_list_provider.dart';
 
 class CreateProjectThirdStep extends StatefulWidget {
   final String selectedOptionFromDropdown;

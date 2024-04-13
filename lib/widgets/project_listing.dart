@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-// import 'package:project3_customer_success_platform/data/list_of_projects.dart';
-// import 'dart:developer' as developer;
-import 'package:project3_customer_success_platform/utils/constants/project_statuses.dart';
+
 import '../model/project.dart';
 // import '../widgets/sort_button.dart';
+
+import '../utils/constants/project_statuses.dart';
 import '../utils/colors.dart';
+
 import 'projects_list_item.dart';
 
 class ProjectListing extends StatefulWidget {

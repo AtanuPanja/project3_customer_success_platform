@@ -2,6 +2,9 @@ import 'associated_manager.dart';
 import 'budget.dart';
 import 'stack.dart';
 
+// This is the model class to model the Project map instance fetched from the api
+// It contains the AssociatedManager, Budget and Stack type objects associated with it, just as project data has nested map instances for budget, associated_manager, and stack
+// This model contains methods for converting to and from project map instances. 
 class Project {
     final String id;
     final String name;

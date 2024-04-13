@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+// This model class is used model the budget data, associated with the project list fetched
+// This model has the fields, and the methods for converting to and from Map instances
 class Budget {
     final String type;
     final String typeValue;

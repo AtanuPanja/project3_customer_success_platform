@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+// This model class is used to model the nested stack map instance, inside the project map instance
+// It contains methods for converting to and from the stack map instance
 class Stack {
     final String label;
     final String value;

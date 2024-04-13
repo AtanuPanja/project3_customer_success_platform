@@ -10,6 +10,7 @@ class ManagersListProvider extends ChangeNotifier {
   
   List<Manager> managers = [];
 
+  // this method fetches the data from the api, by making a network call to the get managers endpoint
   void getManagersData() async {
     List<dynamic> data = await ApiService.getHTTP(ApiEndpoints.getManagers);
 

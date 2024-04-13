@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'dart:developer' as developer;
-
-import 'package:project3_customer_success_platform/providers/managers_list_provider.dart';
-import 'package:project3_customer_success_platform/providers/projects_list_provider.dart';
-import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+
+import 'managers_list_provider.dart';
+import 'projects_list_provider.dart';
 
 import '../api/api_service.dart';
 import '../utils/constants/api_endpoints.dart';
@@ -15,10 +15,12 @@ import '../utils/constants/api_endpoints.dart';
 // postProjectsData method creates a data object, and posts the data by calling the endpoint
 class CreateProjectProvider extends ChangeNotifier {
   
+  // fields needed for the creation of project
   late String projectName;
   late String managerID;
   late String managerName;
   
+  // setters for the fields
   set setProjectName(String name) {
     projectName = name;
   }
@@ -27,7 +29,10 @@ class CreateProjectProvider extends ChangeNotifier {
     managerName = name;
   }
 
+  // this method takes the data from the fields, and posts the data from the api, by making a network call to the createproject endpoint
   Future<bool> postProjectData(BuildContext context) async {
+
+    // creating the data object to send to the backend
     Map<String,dynamic> data = {};
     data['_id'] = const Uuid().v4();
     data['name'] = projectName;
@@ -54,9 +59,18 @@ class CreateProjectProvider extends ChangeNotifier {
       "start_date": "{Project creation date}"
     }
      */
+
+    // post request - the url and the network have been abstracted to other folders
     bool postSuccess = await ApiService.postHTTP(ApiEndpoints.postProject, data);
+
+    // this notifies any state changes to the provider classes
     notifyListeners();
+
+    // use build context synchronously
+    // checking if the context is mounted using the context.mounted condition, before using the context
     if (context.mounted) {
+
+      // updating the project listing after the create project has been completed, so that the new project is visible in the list
       Provider.of<ProjectsListProvider>(context, listen: false).getProjectsData();
     }
     return postSuccess;

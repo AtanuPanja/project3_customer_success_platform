@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'dart:developer' as developer;
+
+import '../utils/colors.dart';
+
 import '../providers/create_project_provider.dart';
 import '../providers/managers_list_provider.dart';
-import '../utils/colors.dart';
+
 import '../widgets/create_project_first_step.dart';
 import '../widgets/create_project_second_step.dart';
 import '../widgets/create_project_third_step.dart';
@@ -11,10 +14,7 @@ import '../widgets/create_project_third_step.dart';
 class CreateProjectScreen extends StatefulWidget {
   const CreateProjectScreen({
     super.key,
-    required this.updateListOfProjects,
   });
-
-  final VoidCallback updateListOfProjects;
 
   @override
   State<CreateProjectScreen> createState() => _CreateProjectScreenState();
@@ -53,6 +53,10 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+
+    // Create project screen has a dropdown to select manager. So, managers list state provider is accessed here
+    // Also, create project provider is consumed here, where project name and manager name are set according to the new entries.
     return ChangeNotifierProvider(
       create: (context) => ManagersListProvider(),
       child: Consumer<CreateProjectProvider>(

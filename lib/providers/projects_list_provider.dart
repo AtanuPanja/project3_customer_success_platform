@@ -1,11 +1,11 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'dart:math';
 import 'dart:developer' as developer;
 
-import 'package:project3_customer_success_platform/api/api_service.dart';
-import 'package:project3_customer_success_platform/model/project.dart';
-import 'package:project3_customer_success_platform/utils/constants/api_endpoints.dart';
+import '../utils/constants/api_endpoints.dart';
+
+import '../api/api_service.dart';
+import '../model/project.dart';
 
 // this will provide the projects state in the Consumer widgets
 // holding the global projects state

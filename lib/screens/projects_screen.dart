@@ -5,6 +5,7 @@ import '../utils/constants/project_statuses.dart';
 import '../widgets/projects_card.dart';
 import '../widgets/project_listing.dart';
 
+// Projects are fetched and passed to project cards and project listing
 class ProjectsScreen extends StatefulWidget {
   const ProjectsScreen({
     super.key,
@@ -25,6 +26,8 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
   @override
   Widget build(BuildContext context) {
     return Consumer<ProjectsListProvider>(builder: (context, value, child) {
+
+      // projects accessed from the state
       final projects = value.projects;
       // developer.log(projects.toString(), name: 'Project Listing page projects');
       if (projects.isNotEmpty) {

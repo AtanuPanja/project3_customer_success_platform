@@ -7,8 +7,9 @@ import '../utils/constants/api_endpoints.dart';
 import 'projects_list_provider.dart';
 
 // This will provide the state for updating the existing project
-//
 class UpdateProjectProvider extends ChangeNotifier {
+
+  // fields needed for updating a project details
   String id = '';
   String overview = '';
   String budgetValue = '';
@@ -18,6 +19,7 @@ class UpdateProjectProvider extends ChangeNotifier {
   };
   String scope = '';
 
+  // setters for the fields
   set setId(String id) {
     this.id = id;
   }
@@ -41,6 +43,7 @@ class UpdateProjectProvider extends ChangeNotifier {
     this.scope = scope;
   }
 
+  // this method creates a map instance named data, and sends a post request (update is being done using post request, as per the API structure)
   Future<bool> updateProjectData(BuildContext context) async {
     Map<String, dynamic> data = {
       'projectDetails': {
@@ -76,10 +79,17 @@ class UpdateProjectProvider extends ChangeNotifier {
 }
    */
     developer.log(ApiEndpoints.updateProject.replaceAll(':id', id), name: 'Update endpoint');
+
+    // update project, also done as post request, - one update url, where :id is being replaced with the project id, making a different endpoint for each project
+    // the network call and the url endpoint are abstracted out in separate files
     bool updateSuccess =
         await ApiService.postHTTP(ApiEndpoints.updateProject.replaceAll(':id', id), data);
     notifyListeners();
+
+    // context.mounted check before accessing context inside an async function
     if (context.mounted) {
+
+      // after updating the project, fetching the new project list
       Provider.of<ProjectsListProvider>(context, listen: false)
           .getProjectsData();
     }

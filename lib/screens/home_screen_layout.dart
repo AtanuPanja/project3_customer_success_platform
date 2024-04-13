@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:project3_customer_success_platform/screens/create_project_screen.dart';
+
+import '../utils/images.dart';
 import '../widgets/app_logo_header.dart';
+
 import 'projects_screen.dart';
-import '../data/list_of_projects.dart' as projects_data;
+import 'create_project_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -14,15 +16,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // saving the data from the file list_of_projects.dart, into state variable listOfProjects
-  var listOfProjects = projects_data.listOfProjects;
-
-  // method to update the list of projects in the state
-  void updateListOfProjects() {
-    setState(() {
-      listOfProjects = projects_data.listOfProjects;
-    });
-  }
 
   // list of items to show in the drawer
   List<Map<String, dynamic>> listOfDrawerTiles = [
@@ -81,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: InkWell(
-              child: Image.asset('assets/images/default_profile_32px.png'),
+              child: Image.asset(AppImages.defaultProfileAvatar),
               onTap: () {},
             ),
           ),
@@ -103,8 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: ((context) => CreateProjectScreen(
-                            updateListOfProjects: updateListOfProjects,
+                      builder: ((context) => const CreateProjectScreen(
                           )),
                     ),
                   );

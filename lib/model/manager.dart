@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+// // This model class is used model the manager data, for fetching managers list effectively
+// This model has the fields, and the methods for converting to and from Map instances
 class Manager {
     final String userId;
     final String email;

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:project3_customer_success_platform/providers/create_project_provider.dart';
-import 'package:project3_customer_success_platform/providers/projects_list_provider.dart';
-import 'package:project3_customer_success_platform/providers/update_project_provider.dart';
 import 'package:provider/provider.dart';
-import 'screens/home_screen_layout.dart';
+
 import 'utils/themes.dart';
+
+import 'screens/home_screen_layout.dart';
+
+import 'providers/create_project_provider.dart';
+import 'providers/projects_list_provider.dart';
+import 'providers/update_project_provider.dart';
 
 void main() {
   runApp(const MainApp());
@@ -15,8 +18,8 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // wrapping the entire app with ChangeNotifierProvider
-    // single state - ProjectsList is required now, this is why ChangeNotifierProvider is used
+    // wrapping the entire app with MultiProvider
+    // multiple states are needed - Projects list, create project and update project
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(

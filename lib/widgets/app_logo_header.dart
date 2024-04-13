@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../utils/images.dart';
+
+// defining an abstract app logo header, to display in the drawer
 class AppLogoHeader extends StatelessWidget {
   const AppLogoHeader({super.key});
 
@@ -15,7 +18,7 @@ class AppLogoHeader extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8.0),
               image: const DecorationImage(
-                image: AssetImage('assets/images/logo.png'),
+                image: AssetImage(AppImages.appLogo),
                 fit: BoxFit.cover,
               ),
             ),
